@@ -1,0 +1,39 @@
+:root {
+  /* --font-display, --font-sans, --font-hand, --font-mono are supplied by
+     next/font/google in app/layout.tsx (Bricolage Grotesque, Karla, Caveat, DM Mono),
+     each with its own generated fallback stack. */
+
+  --text-2xs: 0.6875rem;  /* 11 - stamps, table meta */
+  --text-xs: 0.75rem;     /* 12 */
+  --text-sm: 0.8125rem;   /* 13 */
+  --text-base: 0.9375rem; /* 15 - default UI */
+  --text-md: 1.0625rem;   /* 17 - reading copy */
+  --text-lg: 1.3125rem;   /* 21 */
+  --text-xl: 1.625rem;    /* 26 */
+  --text-2xl: 2rem;       /* 32 */
+  --text-3xl: 2.5rem;     /* 40 */
+  --text-4xl: 3.25rem;    /* 52 */
+  --text-5xl: 4.125rem;   /* 66 */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-display: 800;
+
+  --leading-tight: 1.04;
+  --leading-snug: 1.2;
+  --leading-normal: 1.45;
+  --leading-relaxed: 1.6;
+
+  --tracking-display: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-stamp: 0.12em;
+
+  --type-display-family: var(--font-display);
+  --type-heading-family: var(--font-display);
+  --type-body-family: var(--font-sans);
+  --type-note-family: var(--font-hand);
+  --type-data-family: var(--font-mono);
+}
