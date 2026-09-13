@@ -1,0 +1,98 @@
+:root {
+  /* ---- Ink: warm browns, never neutral grey ---- */
+  --ink-900: #231F18;
+  --ink-700: #3A342A;
+  --ink-500: #5E564A;
+  --ink-400: #847A6B;
+  --ink-300: #B3A794;
+
+  /* ---- Paper: cream / kraft ---- */
+  --paper-000: #FFFDF7;
+  --paper-100: #FBF5E9;
+  --paper-200: #F4EBD9;
+  --paper-300: #E9DCC4;
+  --paper-400: #D9C9AB;
+
+  /* ---- Leaf: the primary ---- */
+  --leaf-900: #1F3D23;
+  --leaf-700: #2F5A33;
+  --leaf-600: #3E7042;
+  --leaf-500: #568C4E;
+  --leaf-300: #9CBE84;
+  --leaf-100: #D6E5C3;
+  --leaf-050: #EDF3E2;
+
+  /* ---- Clay: the accent (carrot / terracotta pot) ---- */
+  --clay-700: #8F4520;
+  --clay-600: #C4622D;
+  --clay-500: #DD7C3D;
+  --clay-300: #EFA873;
+  --clay-100: #F8DEC7;
+
+  /* ---- Sun: highlights, wheat, honey ---- */
+  --sun-600: #B27E18;
+  --sun-500: #E4A93C;
+  --sun-300: #F2CE7C;
+  --sun-100: #FBEBC6;
+
+  /* ---- Berry: problems ---- */
+  --berry-600: #8E332D;
+  --berry-500: #B8453D;
+  --berry-100: #F3D9D5;
+
+  /* ---- Sky: information, water, weather ---- */
+  --sky-600: #2F6179;
+  --sky-500: #4A88A3;
+  --sky-100: #D8E7ED;
+
+  /* ---- Semantic: text ---- */
+  --text-body: var(--ink-700);
+  --text-strong: var(--ink-900);
+  --text-muted: var(--ink-500);
+  --text-faint: var(--ink-400);
+  --text-on-dark: var(--paper-100);
+  --text-on-accent: var(--paper-000);
+  --text-link: var(--leaf-700);
+  --text-link-hover: var(--clay-600);
+
+  /* ---- Semantic: surfaces ---- */
+  --surface-page: var(--paper-100);
+  --surface-card: var(--paper-000);
+  --surface-sunken: var(--paper-200);
+  --surface-accent: var(--leaf-050);
+  --surface-inverse: var(--leaf-900);
+  --surface-kraft: var(--paper-300);
+
+  /* ---- Semantic: borders ---- */
+  --border-hairline: var(--paper-300);
+  --border-default: var(--paper-400);
+  --border-strong: var(--ink-900);
+  --border-accent: var(--leaf-300);
+
+  /* ---- Semantic: actions ---- */
+  --action-primary: var(--leaf-700);
+  --action-primary-hover: var(--leaf-900);
+  --action-primary-press: #16301A;
+  --action-secondary: var(--clay-600);
+  --action-secondary-hover: var(--clay-700);
+  --action-quiet-hover: var(--paper-200);
+  --focus-ring: var(--sun-500);
+
+  /* ---- Semantic: status ---- */
+  --status-good-fg: var(--leaf-700);
+  --status-good-bg: var(--leaf-100);
+  --status-warn-fg: var(--sun-600);
+  --status-warn-bg: var(--sun-100);
+  --status-bad-fg: var(--berry-600);
+  --status-bad-bg: var(--berry-100);
+  --status-info-fg: var(--sky-600);
+  --status-info-bg: var(--sky-100);
+
+  /* ---- Domain: crop categories (box planning, share cards) ---- */
+  --crop-root: #B5652E;
+  --crop-green: #4C7A3C;
+  --crop-fruit: #B23F4A;
+  --crop-allium: #8E7BA8;
+  --crop-herb: #6A9A6B;
+  --crop-pantry: #A8863F;
+}

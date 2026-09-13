@@ -1,0 +1,7 @@
+:root {
+  --pattern-seed: radial-gradient(var(--paper-400) 1px, transparent 1.2px);
+  --pattern-seed-size: 14px 14px;
+  --pattern-furrow: repeating-linear-gradient(90deg, transparent 0 11px, color-mix(in oklch, var(--paper-400) 60%, transparent) 11px 12px);
+  --pattern-furrow-size: 12px 100%;
+  --rule-twine: var(--stroke) dashed var(--border-default);
+}
