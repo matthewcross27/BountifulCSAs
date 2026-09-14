@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 import { Shell } from "./Shell";
 import type { ViewId } from "./Shell";
@@ -8,14 +9,20 @@ import { WeekView } from "./WeekView";
 import { BoxPlanner } from "./BoxPlanner";
 import { Roster } from "./Roster";
 import { Money } from "./Money";
+import { Payments } from "./Payments";
 import { Assistant } from "./Assistant";
 import { Card } from "../core/Card";
 import { Callout } from "../core/Callout";
 import { Button } from "../core/Button";
 import { Dialog } from "../overlay/Dialog";
 
+const VIEW_IDS: ViewId[] = ["week", "box", "members", "money", "payments", "farmstore", "season"];
+
 export function DashboardApp() {
-  const [view, setView] = React.useState<ViewId>("week");
+  const searchParams = useSearchParams();
+  const requestedView = searchParams.get("view");
+  const initialView = VIEW_IDS.includes(requestedView as ViewId) ? (requestedView as ViewId) : "week";
+  const [view, setView] = React.useState<ViewId>(initialView);
   const [assistant, setAssistant] = React.useState(false);
   const [publishing, setPublishing] = React.useState(false);
   const [published, setPublished] = React.useState(false);
@@ -24,6 +31,7 @@ export function DashboardApp() {
     view === "box" ? <BoxPlanner onPublish={() => setPublishing(true)} /> :
     view === "members" ? <Roster onNote={() => setAssistant(true)} /> :
     view === "money" ? <Money /> :
+    view === "payments" ? <Payments /> :
     view === "farmstore" || view === "season" ? (
       <Card variant="sunken" title={view === "farmstore" ? "Farmstore" : "Season recap"}>
         <p style={{ margin: 0, color: "var(--text-muted)" }}>
