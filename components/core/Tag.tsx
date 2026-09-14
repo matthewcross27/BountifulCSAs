@@ -14,12 +14,24 @@ const CROP: Record<NonNullable<TagProps["crop"]>, string> = {
   allium: "var(--crop-allium)", herb: "var(--crop-herb)", pantry: "var(--crop-pantry)",
 };
 
-export function Tag({ children, crop, selected = false, onRemove, onClick, style, ...rest }: TagProps) {
+export function Tag({ children, crop, selected = false, onRemove, onClick, style, onKeyDown, ...rest }: TagProps) {
   const [hover, setHover] = React.useState(false);
   const interactive = !!onClick;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    onKeyDown?.(e);
+    if (interactive && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      onClick?.(e as unknown as React.MouseEvent<HTMLSpanElement>);
+    }
+  };
+
   return (
     <span
       onClick={onClick}
+      onKeyDown={interactive ? handleKeyDown : onKeyDown}
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
