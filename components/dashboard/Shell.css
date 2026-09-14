@@ -1,0 +1,35 @@
+@media (max-width: 1023.98px) {
+  .dashboard-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100dvh;
+    z-index: 60;
+    width: min(240px, 82vw);
+    transform: translateX(-100%);
+    visibility: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--dur-base) var(--ease-settle), visibility 0s linear var(--dur-base);
+  }
+  .dashboard-nav.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .dashboard-nav-toggle {
+    display: inline-flex !important;
+  }
+  .dashboard-nav-close {
+    display: inline-flex !important;
+  }
+  .dashboard-backdrop {
+    display: block !important;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-settle);
+  }
+  .dashboard-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import {
-  CalendarDays, Package, Users, Receipt, Landmark, Store, Sprout, MessagesSquare, CloudSun, Mail,
+  CalendarDays, Package, Users, Receipt, Landmark, Store, Sprout, MessagesSquare, CloudSun, Mail, Menu, X,
 } from "lucide-react";
 import { IconButton } from "../core/IconButton";
+import "./Shell.css";
 
 export type ViewId = "week" | "box" | "members" | "money" | "payments" | "farmstore" | "season";
 
@@ -25,15 +26,77 @@ export interface ShellProps {
   onHelp: () => void;
 }
 
+const NAV_ID = "dashboard-nav";
+
 export function Shell({ view, onView, children, onHelp }: ShellProps) {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const toggleRef = React.useRef<HTMLButtonElement>(null);
+  const closeRef = React.useRef<HTMLButtonElement>(null);
+  const wasOpen = React.useRef(false);
+
+  React.useEffect(() => {
+    if (drawerOpen) {
+      wasOpen.current = true;
+      closeRef.current?.focus();
+    } else if (wasOpen.current) {
+      wasOpen.current = false;
+      toggleRef.current?.focus();
+    }
+  }, [drawerOpen]);
+
+  React.useEffect(() => {
+    if (!drawerOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setDrawerOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [drawerOpen]);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => { if (mq.matches) setDrawerOpen(false); };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const navigate = (id: ViewId) => { onView(id); setDrawerOpen(false); };
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--surface-page)", fontFamily: "var(--type-body-family)" }}>
-      <nav style={{
-        width: 240, flex: "none", background: "var(--surface-inverse)", color: "var(--text-on-dark)",
-        padding: "var(--space-6) var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-7)",
-      }}>
-        <div style={{ fontFamily: "var(--type-display-family)", fontWeight: "var(--weight-display)", letterSpacing: "var(--tracking-display)", fontSize: "var(--text-lg)", padding: "0 var(--space-2)" }}>
-          <span style={{ borderBottom: "3px solid var(--sun-500)", paddingBottom: 2 }}>Bountiful</span> CSAs
+      <div
+        className={`dashboard-backdrop${drawerOpen ? " open" : ""}`}
+        aria-hidden="true"
+        onClick={() => setDrawerOpen(false)}
+        style={{ display: "none", position: "fixed", inset: 0, zIndex: 55, background: "rgba(35, 31, 24, 0.35)" }}
+      />
+
+      <nav
+        id={NAV_ID}
+        className={`dashboard-nav${drawerOpen ? " open" : ""}`}
+        style={{
+          width: 240, flex: "none", background: "var(--surface-inverse)", color: "var(--text-on-dark)",
+          padding: "var(--space-6) var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-7)",
+        }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)" }}>
+          <div style={{ fontFamily: "var(--type-display-family)", fontWeight: "var(--weight-display)", letterSpacing: "var(--tracking-display)", fontSize: "var(--text-lg)", padding: "0 var(--space-2)" }}>
+            <span style={{ borderBottom: "3px solid var(--sun-500)", paddingBottom: 2 }}>Bountiful</span> CSAs
+          </div>
+          <button
+            ref={closeRef}
+            type="button"
+            className="dashboard-nav-close"
+            aria-label="Close navigation"
+            onClick={() => setDrawerOpen(false)}
+            style={{
+              display: "none", flex: "none", width: 36, height: 36, alignItems: "center", justifyContent: "center",
+              borderRadius: "var(--radius-md)", border: "none", background: "transparent", cursor: "pointer",
+              color: "rgba(251,245,233,0.72)",
+            }}>
+            <X style={{ width: 20, height: 20 }} />
+          </button>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -41,7 +104,7 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
             const active = n.id === view;
             const Icon = n.icon;
             return (
-              <button key={n.id} type="button" onClick={() => onView(n.id)}
+              <button key={n.id} type="button" onClick={() => navigate(n.id)}
                 style={{
                   display: "flex", alignItems: "center", gap: "var(--space-3)",
                   minHeight: 44, padding: "0 var(--space-3)", border: "none", cursor: "pointer",
@@ -59,7 +122,7 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
         </div>
 
         <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-          <button type="button" onClick={onHelp}
+          <button type="button" onClick={() => { onHelp(); setDrawerOpen(false); }}
             style={{
               display: "flex", alignItems: "center", gap: "var(--space-3)", minHeight: 44,
               padding: "0 var(--space-3)", borderRadius: "var(--radius-md)", cursor: "pointer",
@@ -83,6 +146,18 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
           background: "var(--paper-000)",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+            <IconButton
+              ref={toggleRef}
+              className="dashboard-nav-toggle"
+              label={drawerOpen ? "Close navigation" : "Open navigation"}
+              variant="outline"
+              aria-expanded={drawerOpen}
+              aria-controls={NAV_ID}
+              onClick={() => setDrawerOpen((o) => !o)}
+              style={{ display: "none" }}
+            >
+              {drawerOpen ? <X style={{ width: 20, height: 20 }} /> : <Menu style={{ width: 20, height: 20 }} />}
+            </IconButton>
             <span style={{ fontSize: "var(--text-2xs)", fontWeight: "var(--weight-bold)", textTransform: "uppercase", letterSpacing: "var(--tracking-stamp)", color: "var(--leaf-700)", border: "1.5px solid var(--leaf-300)", borderRadius: "var(--radius-xs)", padding: "4px 8px" }}>WEEK 12</span>
             <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>2026 season · week of July 14 · pickup Tuesday</span>
           </div>
