@@ -33,14 +33,15 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
   const [auto, setAuto] = React.useState(true);
   const [allowSwap, setAllowSwap] = React.useState(true);
   const [autoNote, setAutoNote] = React.useState(true);
-  const [extraItems, setExtraItems] = React.useState<string[]>([]);
+  const [extraItems, setExtraItems] = React.useState<{ id: number; name: string }[]>([]);
   const [newItem, setNewItem] = React.useState("");
+  const nextExtraId = React.useRef(0);
   const inBox = HARVEST.filter((h) => qty[h.name] > 0);
 
   function addItem() {
     const name = newItem.trim();
     if (!name) return;
-    setExtraItems([...extraItems, name]);
+    setExtraItems([...extraItems, { id: nextExtraId.current++, name }]);
     setNewItem("");
   }
 
@@ -72,12 +73,12 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
                 <Stepper value={qty[h.name]} unit={h.unit} onChange={(v) => setQty({ ...qty, [h.name]: v })} />
               </div>
             ))}
-            {extraItems.map((name) => (
-              <div key={name} style={{
+            {extraItems.map((item) => (
+              <div key={item.id} style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
                 padding: "var(--space-3) 0", borderBottom: "1px solid var(--border-hairline)",
               }}>
-                <Tag crop="pantry" onRemove={() => setExtraItems(extraItems.filter((n) => n !== name))}>{name}</Tag>
+                <Tag crop="pantry" onRemove={() => setExtraItems(extraItems.filter((e) => e.id !== item.id))}>{item.name}</Tag>
                 <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Added by you</span>
               </div>
             ))}
@@ -103,7 +104,7 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
           <Card variant="sticker" title="What members will see" style={{ transform: "rotate(-0.5deg)" }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
               {inBox.map((h) => <Tag key={h.name} crop={h.crop}>{h.name} · {qty[h.name]} {h.unit}</Tag>)}
-              {extraItems.map((name) => <Tag key={name} crop="pantry">{name}</Tag>)}
+              {extraItems.map((item) => <Tag key={item.id} crop="pantry">{item.name}</Tag>)}
             </div>
             <p style={{ fontFamily: "var(--type-note-family)", fontSize: 22, color: "var(--clay-600)", margin: "var(--space-4) 0 0" }}>
               {inBox.length + extraItems.length} things — a good week
