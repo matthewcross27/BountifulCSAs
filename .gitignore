@@ -36,6 +36,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local dev database (Stripe payments mirror; see lib/db)
+/data/*.sqlite3*
+
+# machine-local agent settings / symlinked skill copies (source of truth is .agents/skills)
+.claude/settings.local.json
+.claude/skills
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

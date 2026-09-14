@@ -2,17 +2,18 @@
 
 import * as React from "react";
 import {
-  CalendarDays, Package, Users, Receipt, Store, Sprout, MessagesSquare, CloudSun, Mail,
+  CalendarDays, Package, Users, Receipt, Landmark, Store, Sprout, MessagesSquare, CloudSun, Mail,
 } from "lucide-react";
 import { IconButton } from "../core/IconButton";
 
-export type ViewId = "week" | "box" | "members" | "money" | "farmstore" | "season";
+export type ViewId = "week" | "box" | "members" | "money" | "payments" | "farmstore" | "season";
 
 const NAV: { id: ViewId; label: string; icon: React.ComponentType<{ style?: React.CSSProperties }> }[] = [
   { id: "week", label: "This week", icon: CalendarDays },
   { id: "box", label: "Box planner", icon: Package },
   { id: "members", label: "Members", icon: Users },
   { id: "money", label: "Money", icon: Receipt },
+  { id: "payments", label: "Payments", icon: Landmark },
   { id: "farmstore", label: "Farmstore", icon: Store },
   { id: "season", label: "Season recap", icon: Sprout },
 ];
