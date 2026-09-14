@@ -9,14 +9,14 @@ import "./Shell.css";
 
 export type ViewId = "week" | "box" | "members" | "money" | "payments" | "farmstore" | "season";
 
-const NAV: { id: ViewId; label: string; icon: React.ComponentType<{ style?: React.CSSProperties }> }[] = [
+const NAV: { id: ViewId; label: string; icon: React.ComponentType<{ style?: React.CSSProperties }>; disabled?: boolean }[] = [
   { id: "week", label: "This week", icon: CalendarDays },
   { id: "box", label: "Box planner", icon: Package },
   { id: "members", label: "Members", icon: Users },
   { id: "money", label: "Money", icon: Receipt },
   { id: "payments", label: "Payments", icon: Landmark },
-  { id: "farmstore", label: "Farmstore", icon: Store },
-  { id: "season", label: "Season recap", icon: Sprout },
+  { id: "farmstore", label: "Farmstore", icon: Store, disabled: true },
+  { id: "season", label: "Season recap", icon: Sprout, disabled: true },
 ];
 
 export interface ShellProps {
@@ -103,20 +103,34 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
           {NAV.map((n) => {
             const active = n.id === view;
             const Icon = n.icon;
+            const tooltipId = `${n.id}-tooltip`;
             return (
-              <button key={n.id} type="button" onClick={() => navigate(n.id)}
-                style={{
-                  display: "flex", alignItems: "center", gap: "var(--space-3)",
-                  minHeight: 44, padding: "0 var(--space-3)", border: "none", cursor: "pointer",
-                  borderRadius: "var(--radius-md)", textAlign: "left",
-                  background: active ? "rgba(251,245,233,0.14)" : "transparent",
-                  color: active ? "var(--paper-000)" : "rgba(251,245,233,0.72)",
-                  fontSize: "var(--text-base)", fontWeight: active ? "var(--weight-bold)" : "var(--weight-medium)",
-                  transition: "background var(--dur-fast) var(--ease-settle)",
-                }}>
-                <Icon style={{ width: 20, height: 20 }} />
-                {n.label}
-              </button>
+              <span key={n.id} className="dashboard-nav-item" style={{ position: "relative" }}>
+                <button
+                  type="button"
+                  onClick={n.disabled ? undefined : () => navigate(n.id)}
+                  aria-disabled={n.disabled || undefined}
+                  aria-describedby={n.disabled ? tooltipId : undefined}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "var(--space-3)",
+                    minHeight: 44, padding: "0 var(--space-3)", border: "none",
+                    cursor: n.disabled ? "not-allowed" : "pointer",
+                    borderRadius: "var(--radius-md)", textAlign: "left", width: "100%",
+                    background: active ? "rgba(251,245,233,0.14)" : "transparent",
+                    color: active ? "var(--paper-000)" : "rgba(251,245,233,0.72)",
+                    opacity: n.disabled ? 0.45 : 1,
+                    fontSize: "var(--text-base)", fontWeight: active ? "var(--weight-bold)" : "var(--weight-medium)",
+                    transition: "background var(--dur-fast) var(--ease-settle)",
+                  }}>
+                  <Icon style={{ width: 20, height: 20 }} />
+                  {n.label}
+                </button>
+                {n.disabled ? (
+                  <span id={tooltipId} role="tooltip" className="dashboard-nav-tooltip">
+                    Coming soon
+                  </span>
+                ) : null}
+              </span>
             );
           })}
         </div>
