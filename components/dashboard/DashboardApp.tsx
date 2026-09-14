@@ -45,7 +45,7 @@ export function DashboardApp() {
         </p>
       </Card>
     ) :
-    <WeekView onPlan={() => setView("box")} onPublish={() => setPublishing(true)} decisions={decisions} />;
+    <WeekView published={published} onPlan={() => setView("box")} onPublish={() => setPublishing(true)} decisions={decisions} />;
 
   return (
     <>

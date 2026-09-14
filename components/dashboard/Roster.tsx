@@ -26,9 +26,30 @@ const MEMBERS: { name: string; share: string; site: string; status: [NonNullable
   { name: "Owen Baptiste", share: "Full · weekly", site: "Ridgefoot barn", status: ["info", "Vacation hold · 2 wks"], since: "2022" },
 ];
 
+const WAITLIST: { name: string; share: string; site: string; status: [NonNullable<BadgeProps["tone"]>, string]; since: string }[] = [
+  { name: "Priya Anand", share: "Full · weekly (requested)", site: "Ridgefoot barn", status: ["info", "Waiting since Jun"], since: "2026" },
+  { name: "The Okafor household", share: "Half · weekly (requested)", site: "Tuesday market", status: ["info", "Waiting since Jun"], since: "2026" },
+  { name: "Liam Foster", share: "Full · weekly (requested)", site: "Home delivery", status: ["info", "Waiting since Jul"], since: "2026" },
+];
+
+const SITES: { name: string; share: string; site: string; status: [NonNullable<BadgeProps["tone"]>, string]; since: string }[] = [
+  { name: "Ridgefoot barn", share: "112 households", site: "Tue & Fri, 3-7pm", status: ["good", "Active"], since: "2019" },
+  { name: "Tuesday market", share: "24 households", site: "Tue, 4-6:30pm", status: ["good", "Active"], since: "2021" },
+  { name: "Home delivery", share: "12 households", site: "Wed routes", status: ["good", "Active"], since: "2023" },
+];
+
+const TAB_ROWS: Record<string, typeof MEMBERS> = { members: MEMBERS, waitlist: WAITLIST, sites: SITES };
+const TAB_TOTALS: Record<string, number> = { members: 148, waitlist: 12, sites: 3 };
+
 export function Roster() {
   const [tab, setTab] = React.useState("members");
+  const [query, setQuery] = React.useState("");
   const [composerOpen, setComposerOpen] = React.useState(false);
+
+  const rows = TAB_ROWS[tab];
+  const filtered = query.trim()
+    ? rows.filter((r) => r.name.toLowerCase().includes(query.trim().toLowerCase()))
+    : rows;
 
   const recipientOptions = [
     ...TAB_SCOPES,
@@ -60,8 +81,8 @@ export function Roster() {
         </div>
 
         <div style={{ padding: "var(--space-4) var(--space-5)", display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
-          <Input placeholder="Find a household" onChange={() => {}} style={{ maxWidth: 280 }} />
-          <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Showing 6 of 148</span>
+          <Input placeholder="Find a household" value={query} onChange={(e) => setQuery(e.target.value)} style={{ maxWidth: 280 }} />
+          <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Showing {filtered.length} of {TAB_TOTALS[tab]}</span>
         </div>
 
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
@@ -73,7 +94,7 @@ export function Roster() {
             </tr>
           </thead>
           <tbody>
-            {MEMBERS.map((m) => (
+            {filtered.map((m) => (
               <tr key={m.name}>
                 <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{m.name}</td>
                 <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", color: "var(--text-body)" }}>{m.share}</td>
