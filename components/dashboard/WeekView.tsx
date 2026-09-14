@@ -6,6 +6,7 @@ import { Tag } from "../core/Tag";
 import { Stat } from "../core/Stat";
 import { Callout } from "../core/Callout";
 import type { TagProps } from "../core/Tag";
+import type { AssistantDecision } from "./Assistant";
 
 const BOX: { crop: TagProps["crop"]; name: string; qty: string }[] = [
   { crop: "green", name: "Rainbow chard", qty: "1 bunch" },
@@ -26,9 +27,10 @@ const TODO = [
 export interface WeekViewProps {
   onPlan: () => void;
   onPublish: () => void;
+  decisions?: AssistantDecision[];
 }
 
-export function WeekView({ onPlan, onPublish }: WeekViewProps) {
+export function WeekView({ onPlan, onPublish, decisions = [] }: WeekViewProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap" }}>
@@ -108,6 +110,19 @@ export function WeekView({ onPlan, onPublish }: WeekViewProps) {
           </Card>
         </div>
       </div>
+
+      {decisions.length > 0 ? (
+        <Card eyebrow="ASK BOUNTIFUL" title="Recent decisions">
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+            {decisions.map((d) => (
+              <div key={d.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", paddingBottom: "var(--space-3)", borderBottom: "1px solid var(--border-hairline)" }}>
+                <span style={{ fontSize: "var(--text-base)", color: "var(--text-strong)" }}>{d.summary}</span>
+                <span style={{ fontFamily: "var(--type-data-family)", fontSize: "var(--text-sm)", color: "var(--text-muted)", flex: "none" }}>{d.at}</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+      ) : null}
     </div>
   );
 }

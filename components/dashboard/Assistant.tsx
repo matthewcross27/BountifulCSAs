@@ -12,13 +12,54 @@ const SCRIPT = [
   { from: "bountiful", text: "One thing I can't guess: what should a full share cost in 2027?" },
 ];
 
-export interface AssistantProps {
-  onClose: () => void;
+const PRICE_DECISIONS = [
+  {
+    id: "keep",
+    label: "Keep $28.50",
+    reply: "Got it - I'll keep full shares at $28.50 for 2027, and let your 148 members know when renewal opens Feb 1.",
+    summary: "Kept the full-share price at $28.50 for 2027",
+  },
+  {
+    id: "raise",
+    label: "Raise to $30",
+    reply: "Got it - I'll set full shares to $30 for 2027, and let your 148 members know when renewal opens Feb 1.",
+    summary: "Raised the full-share price to $30 for 2027",
+  },
+  {
+    id: "later",
+    label: "I'll decide later",
+    reply: "No problem - I'll leave the price where it is for now and check back with you before renewal opens Feb 1.",
+    summary: "Put off the 2027 full-share pricing decision",
+  },
+] as const;
+
+export interface AssistantDecision {
+  id: string;
+  summary: string;
+  at: string;
 }
 
-export function Assistant({ onClose }: AssistantProps) {
+export interface AssistantProps {
+  onClose: () => void;
+  onDecision: (entry: AssistantDecision) => void;
+}
+
+export function Assistant({ onClose, onDecision }: AssistantProps) {
   const [step, setStep] = React.useState(3);
+  const [decisionId, setDecisionId] = React.useState<string | null>(null);
+  const instanceId = React.useId();
   const visible = SCRIPT.slice(0, step + 1);
+  const decision = PRICE_DECISIONS.find((d) => d.id === decisionId) ?? null;
+
+  function chooseDecision(choice: (typeof PRICE_DECISIONS)[number]) {
+    if (decisionId) return;
+    setDecisionId(choice.id);
+    onDecision({
+      id: `${choice.id}-${instanceId}`,
+      summary: choice.summary,
+      at: new Date().toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }),
+    });
+  }
 
   return (
     <aside style={{
@@ -46,12 +87,26 @@ export function Assistant({ onClose }: AssistantProps) {
             padding: "var(--space-3) var(--space-4)", fontSize: "var(--text-base)",
           }}>{m.text}</div>
         ))}
+        {decision ? (
+          <div style={{
+            alignSelf: "flex-start", maxWidth: "86%",
+            background: "var(--surface-sunken)", color: "var(--text-body)",
+            borderRadius: "var(--radius-md) var(--radius-md) var(--radius-md) var(--radius-xs)",
+            padding: "var(--space-3) var(--space-4)", fontSize: "var(--text-base)",
+          }}>{decision.reply}</div>
+        ) : null}
       </div>
 
       <div style={{ padding: "var(--space-4) var(--space-5)", borderTop: "1px solid var(--border-hairline)", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", alignItems: "center" }}>
-        <Tag onClick={() => {}}>Keep $28.50</Tag>
-        <Tag onClick={() => {}}>Raise to $30</Tag>
-        <Tag onClick={() => {}}>I&apos;ll decide later</Tag>
+        {PRICE_DECISIONS.map((choice) => (
+          <Tag
+            key={choice.id}
+            selected={decisionId === choice.id}
+            onClick={decisionId ? undefined : () => chooseDecision(choice)}
+          >
+            {choice.label}
+          </Tag>
+        ))}
         <Button size="sm" variant="quiet" onClick={() => setStep(Math.min(SCRIPT.length - 1, step + 1))} style={{ marginLeft: "auto" }}>Type instead</Button>
       </div>
     </aside>

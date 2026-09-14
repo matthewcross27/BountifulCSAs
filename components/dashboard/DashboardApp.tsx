@@ -11,6 +11,7 @@ import { Roster } from "./Roster";
 import { Money } from "./Money";
 import { Payments } from "./Payments";
 import { Assistant } from "./Assistant";
+import type { AssistantDecision } from "./Assistant";
 import { Card } from "../core/Card";
 import { Callout } from "../core/Callout";
 import { Button } from "../core/Button";
@@ -26,6 +27,9 @@ export function DashboardApp() {
   const [assistant, setAssistant] = React.useState(false);
   const [publishing, setPublishing] = React.useState(false);
   const [published, setPublished] = React.useState(false);
+  const [decisions, setDecisions] = React.useState<AssistantDecision[]>([]);
+
+  const logDecision = (entry: AssistantDecision) => setDecisions((prev) => [entry, ...prev]);
 
   const screen =
     view === "box" ? <BoxPlanner onPublish={() => setPublishing(true)} /> :
@@ -39,7 +43,7 @@ export function DashboardApp() {
         </p>
       </Card>
     ) :
-    <WeekView onPlan={() => setView("box")} onPublish={() => setPublishing(true)} />;
+    <WeekView onPlan={() => setView("box")} onPublish={() => setPublishing(true)} decisions={decisions} />;
 
   return (
     <>
@@ -64,7 +68,7 @@ export function DashboardApp() {
         148 members will get the list tonight at 6pm. You can still edit it until Monday noon.
       </Dialog>
 
-      {assistant ? <Assistant onClose={() => setAssistant(false)} /> : null}
+      {assistant ? <Assistant onClose={() => setAssistant(false)} onDecision={logDecision} /> : null}
     </>
   );
 }
