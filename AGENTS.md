@@ -19,9 +19,21 @@ the buyer storefront are not yet built.
 - `/dashboard` is the farmer-facing entry route (redirected to from `/`). It mounts
   `components/dashboard/DashboardApp.tsx`, which owns view-switching, the publish-box dialog, and
   the assistant panel — all in-memory `useState`, no backend yet.
-- `components/dashboard/{Shell,WeekView,BoxPlanner,Roster,Money,Assistant}.tsx` are the six
+- `components/dashboard/{Shell,WeekView,BoxPlanner,Roster,Money,Payments,Assistant}.tsx` are the
   screens, ported faithfully from a Claude Design prototype (mock data and copy intentionally
-  unchanged). `Farmstore` and `Season recap` are a deliberate empty state, not implemented views.
+  unchanged, except `Payments` which is a real feature - see below). `Farmstore` and `Season
+  recap` are a deliberate empty state, not implemented views.
+- `Shell.tsx` is the only place in the app with a breakpoint: below 1024px the left nav becomes a
+  fixed-position drawer (`Shell.css`, class-toggled via a `drawerOpen` state) opened by a header
+  hamburger button, closed by backdrop click/Escape/nav-item activation. Its responsive rule set
+  is a plain imported `.css` file, not `<style jsx>` - styled-jsx's client-side style-tag registry
+  re-runs on hydration in this app (dev-mode StrictMode double-effect), which caused a real
+  flash-of-open-drawer bug on page load; a statically-imported stylesheet doesn't re-register and
+  has no flash. Reuse this pattern (plain `.css` import) for any future responsive/breakpoint CSS
+  here rather than reintroducing `<style jsx>`. Also note: `<style jsx>`/`<style jsx global>`
+  scoping only tags JSX elements written directly in that file - classes passed as a prop into a
+  child component (e.g. `IconButton`) never receive the scoping attribute and scoped rules won't
+  match them.
 - `components/{core,forms,navigation,overlay}/*.tsx` are the shared design-system components
   (Button, Card, Switch, Dialog, etc.), each typed against the prop contract of the same-named
   source `.d.ts` in the original design export.

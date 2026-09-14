@@ -12,9 +12,9 @@ export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 
 const SIZES: Record<NonNullable<IconButtonProps["size"]>, number> = { sm: 32, md: 40, lg: 44 };
 
-export function IconButton({
+export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton({
   children, label, size = "md", variant = "quiet", disabled = false, onClick, style, ...rest
-}: IconButtonProps) {
+}, ref) {
   const [hover, setHover] = React.useState(false);
   const [press, setPress] = React.useState(false);
   const px = SIZES[size] || SIZES.md;
@@ -22,6 +22,7 @@ export function IconButton({
 
   return (
     <button
+      ref={ref}
       type="button"
       aria-label={label}
       title={label}
@@ -51,4 +52,4 @@ export function IconButton({
       {children}
     </button>
   );
-}
+});
