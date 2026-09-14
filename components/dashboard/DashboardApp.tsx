@@ -39,7 +39,9 @@ export function DashboardApp() {
     view === "farmstore" || view === "season" ? (
       <Card variant="sunken" title={view === "farmstore" ? "Farmstore" : "Season recap"}>
         <p style={{ margin: 0, color: "var(--text-muted)" }}>
-          Not drawn yet — this surface wasn&apos;t part of the brief. Ask and I&apos;ll build it from the same parts.
+          {view === "farmstore"
+            ? "Your farmstore isn't open yet - we're still building it. We'll let you know the moment it's ready."
+            : "Your season recap isn't ready yet - we're still putting it together. We'll let you know the moment it's ready."}
         </p>
       </Card>
     ) :
