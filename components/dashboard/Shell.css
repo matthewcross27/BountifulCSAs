@@ -5,7 +5,7 @@
     left: 0;
     height: 100dvh;
     z-index: 60;
-    width: min(240px, 82vw);
+    width: min(240px, 82vw) !important;
     transform: translateX(-100%);
     visibility: hidden;
     box-shadow: var(--shadow-lg);

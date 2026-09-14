@@ -139,7 +139,7 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
         </div>
       </nav>
 
-      <main style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
+      <main inert={drawerOpen || undefined} style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
         <header style={{
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
           padding: "var(--space-4) var(--gutter)", borderBottom: "1px solid var(--border-hairline)",
