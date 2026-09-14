@@ -32,9 +32,12 @@ export async function POST(request: Request) {
   }
 
   const customer = await stripe.customers.create({ email: buyerEmail });
-  await stripe.paymentMethods.attach(testPaymentMethod, { customer: customer.id });
+  // Attaching a Stripe test-mode PaymentMethod token (e.g. pm_card_visa) mints a new,
+  // customer-attached PaymentMethod with its own id - that id is what must be used below,
+  // not the original token.
+  const attached = await stripe.paymentMethods.attach(testPaymentMethod, { customer: customer.id });
   await stripe.customers.update(customer.id, {
-    invoice_settings: { default_payment_method: testPaymentMethod },
+    invoice_settings: { default_payment_method: attached.id },
   });
 
   const subscription = await stripe.subscriptions.create({
@@ -42,7 +45,7 @@ export async function POST(request: Request) {
     items: [{ price: boxType.stripePriceId }],
     application_fee_percent: TAKE_RATE_PERCENT,
     transfer_data: { destination: farm.stripeConnectedAccountId },
-    default_payment_method: testPaymentMethod,
+    default_payment_method: attached.id,
     payment_behavior: "error_if_incomplete",
     expand: ["latest_invoice.payments"],
   });

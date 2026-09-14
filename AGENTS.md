@@ -65,11 +65,23 @@ the buyer storefront are not yet built.
   rejects platform-submitted ToS acceptance when `dashboard: "express"` ("requirement collection
   is owned by Stripe") - both are intentional anti-fraud controls, not integration bugs. A real
   human must click through `POST /api/stripe/connect/onboard`'s returned URL in an actual browser
-  once per connected account to reach `stripe_transfers.status === "active"`; there is no test-mode
-  API bypass for Express/Recipient accounts. Everything up to that point (account + account-link
-  creation, the `/return` status sync, destination-charge subscription creation, refunds with
-  `reverse_transfer`/`refund_application_fee`, and webhook-driven `PaymentEvent` mirroring) is
-  implemented and independently verifiable once an account is manually onboarded in test mode.
+  once per connected account to reach `stripe_transfers.status === "active"`, filling in (test-mode
+  fake values are fine): ToS acceptance, entity type ("Individual" is simplest), business URL, and
+  an external bank account. There is no test-mode API bypass for any of these on a recipient
+  configuration. Account links are single-use and expire quickly - mint a fresh one
+  (`POST /api/stripe/connect/onboard`) if a prior attempt didn't visibly land.
+- **Verified end-to-end in test mode** (2026-09-14, account `acct_1UFb4rLnaG0lKs1a`): onboarding to
+  `stripe_transfers.status === "active"`; `POST /api/stripe/subscriptions` created a real
+  Subscription whose invoice charge split exactly 90/25.65 to the connected account's balance and
+  10%/2.85 as the platform's `application_fee_amount` (confirmed via the connected account's
+  `balanceTransactions`, not just the Charge object); `POST /api/stripe/refunds` fully refunded it
+  and the connected account's balance transactions showed the transfer clawed back and the fee
+  credited back, netting to exactly $0; both `charge.succeeded` and `charge.refunded` webhooks
+  mirrored correctly into farm-scoped `PaymentEvent` rows, visible live in the dashboard's Payments
+  view. One bug fixed during this run: `stripe.paymentMethods.attach(token, ...)` on a Stripe
+  test-mode PM token (e.g. `pm_card_visa`) returns a *new* PaymentMethod id - `app/api/stripe/
+  subscriptions/route.ts` must use the returned id, not the original token, for
+  `invoice_settings.default_payment_method`/`default_payment_method`.
 - `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `DATABASE_PATH` / `NEXT_PUBLIC_APP_URL` live in
   `.env.local` (gitignored, test-mode key). For local webhook testing:
   `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
