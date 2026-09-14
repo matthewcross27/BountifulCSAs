@@ -72,7 +72,7 @@ export function WeekView({ onPlan, onPublish }: WeekViewProps) {
               {TODO.map((t) => {
                 const Icon = t.done ? Check : t.icon;
                 return (
-                  <div key={t.text} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start", opacity: t.done ? 0.55 : 1 }}>
+                  <div key={t.text} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
                     <span style={{
                       width: 30, height: 30, flex: "none", borderRadius: "var(--radius-sm)",
                       display: "flex", alignItems: "center", justifyContent: "center",
@@ -82,7 +82,7 @@ export function WeekView({ onPlan, onPublish }: WeekViewProps) {
                       <Icon style={{ width: 17, height: 17 }} />
                     </span>
                     <span>
-                      <span style={{ display: "block", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)", textDecoration: t.done ? "line-through" : "none" }}>{t.text}</span>
+                      <span style={{ display: "block", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: t.done ? "var(--text-muted)" : "var(--text-strong)", textDecoration: t.done ? "line-through" : "none" }}>{t.text}</span>
                       <span style={{ display: "block", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{t.meta}</span>
                     </span>
                   </div>
