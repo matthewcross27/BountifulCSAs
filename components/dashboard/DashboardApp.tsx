@@ -29,7 +29,7 @@ export function DashboardApp() {
 
   const screen =
     view === "box" ? <BoxPlanner onPublish={() => setPublishing(true)} /> :
-    view === "members" ? <Roster onNote={() => setAssistant(true)} /> :
+    view === "members" ? <Roster /> :
     view === "money" ? <Money /> :
     view === "payments" ? <Payments /> :
     view === "farmstore" || view === "season" ? (

@@ -9,6 +9,13 @@ import type { BadgeProps } from "../core/Badge";
 import { Tabs } from "../navigation/Tabs";
 import { Input } from "../forms/Input";
 import { IconButton } from "../core/IconButton";
+import { NoteComposer } from "./NoteComposer";
+
+const TAB_SCOPES: { value: string; label: string }[] = [
+  { value: "members", label: "All members (148)" },
+  { value: "waitlist", label: "Waitlist (12)" },
+  { value: "sites", label: "Pickup sites (3)" },
+];
 
 const MEMBERS: { name: string; share: string; site: string; status: [NonNullable<BadgeProps["tone"]>, string]; since: string }[] = [
   { name: "Dana Whitfield", share: "Full · weekly", site: "Ridgefoot barn", status: ["good", "Paid through October"], since: "2021" },
@@ -19,12 +26,15 @@ const MEMBERS: { name: string; share: string; site: string; status: [NonNullable
   { name: "Owen Baptiste", share: "Full · weekly", site: "Ridgefoot barn", status: ["info", "Vacation hold · 2 wks"], since: "2022" },
 ];
 
-export interface RosterProps {
-  onNote: () => void;
-}
-
-export function Roster({ onNote }: RosterProps) {
+export function Roster() {
   const [tab, setTab] = React.useState("members");
+  const [composerOpen, setComposerOpen] = React.useState(false);
+
+  const recipientOptions = [
+    ...TAB_SCOPES,
+    ...MEMBERS.map((m) => ({ value: "member:" + m.name, label: m.name })),
+  ];
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap" }}>
@@ -36,7 +46,7 @@ export function Roster({ onNote }: RosterProps) {
         </div>
         <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <Button variant="outline" iconLeft={<Download style={{ width: 18, height: 18 }} />}>Pickup sheet</Button>
-          <Button onClick={onNote} iconLeft={<Mail style={{ width: 18, height: 18 }} />}>Send a note</Button>
+          <Button onClick={() => setComposerOpen(true)} iconLeft={<Mail style={{ width: 18, height: 18 }} />}>Send a note</Button>
         </div>
       </div>
 
@@ -78,6 +88,14 @@ export function Roster({ onNote }: RosterProps) {
           </tbody>
         </table>
       </Card>
+
+      {composerOpen ? (
+        <NoteComposer
+          onClose={() => setComposerOpen(false)}
+          recipientOptions={recipientOptions}
+          initialScope={tab}
+        />
+      ) : null}
     </div>
   );
 }
