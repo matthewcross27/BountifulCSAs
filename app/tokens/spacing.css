@@ -17,6 +17,9 @@
   --gutter: var(--space-6);
   --gutter-loose: var(--space-8);
   --section-y: var(--space-10);
+  /* Fluid rhythm for the public landing page's full-bleed sections. */
+  --section-y-fluid: clamp(2.5rem, 5vw, 4rem);      /* 40 - 64 */
+  --section-pad-fluid: clamp(1.5rem, 3.4vw, 2.5rem); /* 24 - 40 */
   --page-max: 1200px;
   --prose-max: 62ch;
   --control-h-sm: 32px;

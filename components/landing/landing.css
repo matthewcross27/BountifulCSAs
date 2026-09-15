@@ -1,0 +1,226 @@
+/* Landing-page layout and breakpoints.
+   Plain imported stylesheet, not <style jsx>: styled-jsx's client-side registry
+   re-runs on hydration in this app and caused a real flash bug (see AGENTS.md). */
+
+.landing {
+  position: relative;
+  overflow-x: clip;
+  background: var(--surface-page);
+  background-image: var(--pattern-seed);
+  background-size: var(--pattern-seed-size);
+}
+
+.landing-glow {
+  position: absolute;
+  inset: 0;
+  height: 900px;
+  background: radial-gradient(
+    120% 70% at 50% -10%,
+    rgba(255, 253, 247, 0.96) 0%,
+    rgba(255, 253, 247, 0.55) 45%,
+    rgba(251, 245, 233, 0) 75%
+  );
+  pointer-events: none;
+}
+
+.landing-shell {
+  position: relative;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  /* padding-inline, not the shorthand: sections combine this class with
+     .landing-header / .landing-section, which set their own vertical padding. */
+  padding-inline: var(--gutter);
+}
+
+.landing-section {
+  padding-block: var(--space-9);
+  border-top: var(--stroke) solid var(--border-hairline);
+}
+
+/* ---- Header ---- */
+
+.landing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+}
+
+.landing-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.landing-nav-link {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  color: var(--text-muted);
+}
+
+.landing-nav-link:hover {
+  color: var(--text-strong);
+}
+
+/* Four nav items plus a button do not fit a phone. Below this width the
+   section links drop and the waitlist call to action carries the header. */
+@media (max-width: 719.98px) {
+  .landing-nav-links {
+    display: none;
+  }
+}
+
+/* ---- Grids ----
+   Every landing grid is an explicit single column that opts into more at a
+   measured width; `auto-fit` guesses badly for two-column content blocks. */
+
+.landing-hero-grid,
+.landing-standard-grid,
+.landing-cta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+@media (min-width: 920px) {
+  .landing-hero-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+@media (min-width: 860px) {
+  .landing-standard-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-7);
+  }
+}
+
+@media (min-width: 900px) {
+  .landing-cta-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: center;
+  }
+}
+
+.landing-cards-3 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 620px) {
+  .landing-cards-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 940px) {
+  .landing-cards-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.landing-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 680px) {
+  .landing-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- Waitlist form ---- */
+
+.landing-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.landing-form-row > .landing-form-email {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+/* Once the row has wrapped there is no reason for a button narrower than the
+   field above it. */
+@media (max-width: 559.98px) {
+  .landing-form-row > button[type="submit"] {
+    flex: 1 1 100%;
+  }
+}
+
+.landing-optional-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 560px) {
+  .landing-optional-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .landing-optional-grid > .landing-optional-wide {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---- Motion ---- */
+
+@keyframes sprout {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.landing-sprout {
+  animation: sprout var(--dur-slow) var(--ease-sprout) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-sprout {
+    animation: none;
+  }
+}
+
+/* Field's label and hint default to dark ink; on the closing section's deep
+   green they invert. Field sets those colors inline, which a plain `color` rule
+   cannot override - so redefine the tokens the inline styles read, scoped to the
+   label and hint elements only. The inputs are siblings and keep their
+   dark-on-white text. */
+.landing-field-dark > label {
+  --text-strong: var(--paper-000);
+}
+
+.landing-field-dark > span {
+  --text-muted: var(--leaf-100);
+}
+
+/* Button (components/core) and the header call to action set box-shadow inline,
+   which outranks base.css's :focus-visible ring and leaves them with no visible
+   keyboard focus. !important is the only thing that beats an inline style;
+   scoped to the landing page so nothing else changes. */
+.landing a:focus-visible,
+.landing button:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-focus) !important;
+}

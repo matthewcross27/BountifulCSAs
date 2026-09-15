@@ -15,6 +15,13 @@
   --text-4xl: 3.25rem;    /* 52 */
   --text-5xl: 4.125rem;   /* 66 */
 
+  /* Fluid display sizes. The dashboard is a fixed-width app and uses the steps
+     above; the public landing page spans phone to wide desktop and scales. */
+  --text-fluid-hero: clamp(2rem, 3.9vw, 3.125rem);      /* 32 - 50 */
+  --text-fluid-section: clamp(1.75rem, 3.2vw, 2.5rem);  /* 28 - 40 */
+  --text-fluid-panel: clamp(1.625rem, 3vw, 2.25rem);    /* 26 - 36 */
+  --text-fluid-lede: clamp(1.0625rem, 1.35vw, 1.1875rem); /* 17 - 19 */
+
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;

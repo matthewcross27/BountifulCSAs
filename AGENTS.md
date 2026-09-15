@@ -12,11 +12,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Next.js 16 (App Router, TypeScript) app. Tech stack rationale lives in
 `data/bountifulcsas-platform-design/report.md` Section 6 (outside this worktree, in firstmate's
-data directory) — Postgres/Neon, Drizzle, Clerk, Inngest, Stripe, etc. The farmer dashboard UI
-and Stripe Connect payments/billing (see below) are implemented; Clerk auth, Inngest jobs, and
-the buyer storefront are not yet built.
+data directory) — Postgres/Neon, Drizzle, Clerk, Inngest, Stripe, etc. The public landing page,
+the farmer dashboard UI, and Stripe Connect payments/billing (see below) are implemented; Clerk
+auth, Inngest jobs, and the buyer storefront are not yet built.
 
-- `/dashboard` is the farmer-facing entry route (redirected to from `/`). It mounts
+- `/` is the public landing page (see below). `/dashboard` is the farmer-facing app. It mounts
   `components/dashboard/DashboardApp.tsx`, which owns view-switching, the publish-box dialog, and
   the assistant panel — all in-memory `useState`, no backend yet.
 - `components/dashboard/{Shell,WeekView,BoxPlanner,Roster,Money,Payments,Assistant}.tsx` are the
@@ -108,6 +108,29 @@ the buyer storefront are not yet built.
 - `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `DATABASE_PATH` / `NEXT_PUBLIC_APP_URL` live in
   `.env.local` (gitignored, test-mode key). For local webhook testing:
   `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
+
+## Landing page (`/`)
+
+- One scrolling waitlist page for farmers, ported from a Claude Design hi-fi prototype saved at
+  `data/bountifulcsas-landing-page/design-source/` (firstmate's data directory). Sections live in
+  `components/landing/*.tsx`; `LandingPage.tsx` composes them and owns the section order.
+- Signups POST to `app/api/waitlist/route.ts` and land in the `waitlist_signups` table. Email is
+  the only required field, validated server-side; a repeat email is a friendly success that merges
+  in any newly supplied optional answers; `lib/waitlist.ts` holds the honeypot field name and the
+  share-count options both the form and the validator use. Read the table with
+  `npm run waitlist:export` (CSV to stdout).
+- The demo video slot is empty on purpose: set `DEMO_VIDEO_SRC` at the top of
+  `components/landing/DemoSection.tsx` to a path under `public/` and the poster panel becomes a
+  real `<video>`.
+- `components/landing/landing.css` holds every breakpoint. Two traps it documents inline: sections
+  combine `.landing-shell` with `.landing-header`/`.landing-section`, so those must use
+  `padding-inline`/`padding-block` rather than the `padding` shorthand; and `Button` plus `Field`
+  set `box-shadow`/`color` inline, which outranks both `base.css`'s `:focus-visible` ring and any
+  plain class rule — the ring needs `!important` and the label colors are re-pointed through the
+  tokens their inline styles read.
+- Dashboard screenshots in "A look inside" are committed under `public/screenshots/` and served
+  through `next/image`. Recapture them by running the app and driving `/dashboard?view=week|box|
+  payments` with Playwright at 2x, hiding `nextjs-portal` first.
 
 ## Maintaining this file
 

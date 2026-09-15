@@ -49,3 +49,17 @@ export const paymentEvents = sqliteTable("payment_events", {
   raw: text("raw", { mode: "json" }),
   createdAt: text("created_at").notNull(),
 });
+
+// Public landing-page waitlist. Email is the only required field and is stored
+// lowercased/trimmed so the unique index also catches case-variant duplicates
+// (app/api/waitlist treats a repeat signup as a success, not an error).
+export const waitlistSignups = sqliteTable("waitlist_signups", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  farmName: text("farm_name"),
+  shareCount: text("share_count"),
+  growingPractices: text("growing_practices"),
+  region: text("region"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+});

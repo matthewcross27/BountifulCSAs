@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "waitlist:export": "tsx scripts/waitlist-export.ts"
   },
   "dependencies": {
     "@next/env": "^16.3.5",
