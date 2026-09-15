@@ -25,12 +25,13 @@ const TODO = [
 ];
 
 export interface WeekViewProps {
+  published: boolean;
   onPlan: () => void;
   onPublish: () => void;
   decisions?: AssistantDecision[];
 }
 
-export function WeekView({ onPlan, onPublish, decisions = [] }: WeekViewProps) {
+export function WeekView({ published, onPlan, onPublish, decisions = [] }: WeekViewProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap" }}>
@@ -63,7 +64,7 @@ export function WeekView({ onPlan, onPublish, decisions = [] }: WeekViewProps) {
             ))}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)" }}>
               <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Members can swap two items until Monday noon.</span>
-              <Badge tone="warn">Not published yet</Badge>
+              {published ? <Badge tone="good">Published</Badge> : <Badge tone="warn">Not published yet</Badge>}
             </div>
           </div>
         </Card>

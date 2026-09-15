@@ -31,7 +31,19 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
     Object.fromEntries(HARVEST.map((h) => [h.name, h.start]))
   );
   const [auto, setAuto] = React.useState(true);
+  const [allowSwap, setAllowSwap] = React.useState(true);
+  const [autoNote, setAutoNote] = React.useState(true);
+  const [extraItems, setExtraItems] = React.useState<{ id: number; name: string }[]>([]);
+  const [newItem, setNewItem] = React.useState("");
+  const nextExtraId = React.useRef(0);
   const inBox = HARVEST.filter((h) => qty[h.name] > 0);
+
+  function addItem() {
+    const name = newItem.trim();
+    if (!name) return;
+    setExtraItems([...extraItems, { id: nextExtraId.current++, name }]);
+    setNewItem("");
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
@@ -61,20 +73,41 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
                 <Stepper value={qty[h.name]} unit={h.unit} onChange={(v) => setQty({ ...qty, [h.name]: v })} />
               </div>
             ))}
+            {extraItems.map((item) => (
+              <div key={item.id} style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
+                padding: "var(--space-3) 0", borderBottom: "1px solid var(--border-hairline)",
+              }}>
+                <Tag crop="pantry" onRemove={() => setExtraItems(extraItems.filter((e) => e.id !== item.id))}>{item.name}</Tag>
+                <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Added by you</span>
+              </div>
+            ))}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginTop: "var(--space-4)", padding: "var(--space-4)", border: "var(--rule-twine)", borderRadius: "var(--radius-md)" }}>
+          <form
+            onSubmit={(e) => { e.preventDefault(); addItem(); }}
+            style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginTop: "var(--space-4)", padding: "var(--space-4)", border: "var(--rule-twine)", borderRadius: "var(--radius-md)" }}
+          >
             <Plus style={{ width: 18, height: 18, color: "var(--text-faint)" }} />
-            <Input placeholder="Add something you didn't log — e.g. sorrel" onChange={() => {}} style={{ flex: 1, border: "none", background: "transparent" }} />
-          </div>
+            <Input
+              placeholder="Add something you didn't log — e.g. sorrel"
+              value={newItem}
+              onChange={(e) => setNewItem(e.target.value)}
+              style={{ flex: 1, border: "none", background: "transparent" }}
+            />
+            {newItem.trim() ? (
+              <Button type="submit" size="sm" variant="quiet">Add</Button>
+            ) : null}
+          </form>
         </Card>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
           <Card variant="sticker" title="What members will see" style={{ transform: "rotate(-0.5deg)" }}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
               {inBox.map((h) => <Tag key={h.name} crop={h.crop}>{h.name} · {qty[h.name]} {h.unit}</Tag>)}
+              {extraItems.map((item) => <Tag key={item.id} crop="pantry">{item.name}</Tag>)}
             </div>
             <p style={{ fontFamily: "var(--type-note-family)", fontSize: 22, color: "var(--clay-600)", margin: "var(--space-4) 0 0" }}>
-              {inBox.length} things — a good week
+              {inBox.length + extraItems.length} things — a good week
             </p>
           </Card>
 
@@ -82,8 +115,10 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
               <Switch checked={auto} onChange={() => setAuto(!auto)}
                 label="Publish the box automatically" hint="Sunday night, from what you logged at harvest." />
-              <Switch checked onChange={() => {}} label="Let members swap two items" hint="Swaps close Monday at noon." />
-              <Switch checked onChange={() => {}} label="Write the weekly note for me" hint="You can edit it before it sends." />
+              <Switch checked={allowSwap} onChange={() => setAllowSwap(!allowSwap)}
+                label="Let members swap two items" hint="Swaps close Monday at noon." />
+              <Switch checked={autoNote} onChange={() => setAutoNote(!autoNote)}
+                label="Write the weekly note for me" hint="You can edit it before it sends." />
             </div>
           </Card>
         </div>

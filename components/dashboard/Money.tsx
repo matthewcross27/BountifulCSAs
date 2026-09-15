@@ -1,3 +1,6 @@
+"use client";
+
+import * as React from "react";
 import { CreditCard } from "lucide-react";
 import { Card } from "../core/Card";
 import { Button } from "../core/Button";
@@ -16,6 +19,9 @@ const ROWS: [string, string, string, [NonNullable<BadgeProps["tone"]>, string]][
 ];
 
 export function Money() {
+  const [retryCards, setRetryCards] = React.useState(true);
+  const [sendReceipts, setSendReceipts] = React.useState(true);
+  const [textMe, setTextMe] = React.useState(false);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div>
@@ -72,9 +78,12 @@ export function Money() {
           </Card>
           <Card title="Background jobs">
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-              <Switch checked onChange={() => {}} label="Retry declined cards" hint="Once on Friday, once the following Tuesday." />
-              <Switch checked onChange={() => {}} label="Send receipts for me" />
-              <Switch checked={false} onChange={() => {}} label="Text me when money lands" />
+              <Switch checked={retryCards} onChange={() => setRetryCards(!retryCards)}
+                label="Retry declined cards" hint="Once on Friday, once the following Tuesday." />
+              <Switch checked={sendReceipts} onChange={() => setSendReceipts(!sendReceipts)}
+                label="Send receipts for me" />
+              <Switch checked={textMe} onChange={() => setTextMe(!textMe)}
+                label="Text me when money lands" />
             </div>
           </Card>
         </div>
