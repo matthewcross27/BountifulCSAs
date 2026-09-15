@@ -25,4 +25,12 @@ a:hover { color: var(--text-link-hover); }
 
 :focus-visible { outline: none; box-shadow: var(--ring-focus); border-radius: var(--radius-xs); }
 
+/* Switch/Checkbox visually hide their native input (0x0, opacity 0), so a focus
+   ring on the input itself is invisible; draw it on the visible sibling instead. */
+input.switch-input:focus-visible + .switch-track,
+input.checkbox-input:focus-visible + .checkbox-box {
+  outline: none;
+  box-shadow: var(--ring-focus);
+}
+
 button, input, select, textarea { font: inherit; color: inherit; }

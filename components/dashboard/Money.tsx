@@ -22,6 +22,20 @@ export function Money() {
   const [retryCards, setRetryCards] = React.useState(true);
   const [sendReceipts, setSendReceipts] = React.useState(true);
   const [textMe, setTextMe] = React.useState(false);
+  const [retryStatus, setRetryStatus] = React.useState<"idle" | "retrying" | "queued">("idle");
+  const [exportStatus, setExportStatus] = React.useState<"idle" | "exporting" | "done">("idle");
+
+  const handleRetryBoth = () => {
+    setRetryStatus("retrying");
+    setTimeout(() => setRetryStatus("queued"), 900);
+  };
+
+  const handleExport = () => {
+    setExportStatus("exporting");
+    setTimeout(() => setExportStatus("done"), 700);
+    setTimeout(() => setExportStatus("idle"), 2500);
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div>
@@ -38,14 +52,27 @@ export function Money() {
         <Card><Stat label="SOLIDARITY FUND" value="$1,240" sub="covers 4 sliding-scale shares" /></Card>
       </div>
 
-      <Callout tone="bad" title="Two cards were declined this week"
+      <Callout tone={retryStatus === "queued" ? "good" : "bad"}
+        title={retryStatus === "queued" ? "Retry queued for both cards" : "Two cards were declined this week"}
         icon={<CreditCard style={{ width: 18, height: 18 }} />}
-        action={<Button size="sm" variant="outline">Retry both</Button>}>
-        Both boxes are still theirs. Bountiful will try again Friday and let you know either way.
+        action={
+          <Button size="sm" variant="outline" disabled={retryStatus !== "idle"} onClick={handleRetryBoth}>
+            {retryStatus === "retrying" ? "Retrying…" : retryStatus === "queued" ? "Retry queued" : "Retry both"}
+          </Button>
+        }>
+        {retryStatus === "queued"
+          ? "Bountiful will try again Friday and let you know either way."
+          : "Both boxes are still theirs. Bountiful will try again Friday and let you know either way."}
       </Callout>
 
       <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
-        <Card title="Share payments" action={<Button size="sm" variant="quiet">Export</Button>} style={{ padding: 0 }}>
+        <Card title="Share payments"
+          action={
+            <Button size="sm" variant="quiet" disabled={exportStatus !== "idle"} onClick={handleExport}>
+              {exportStatus === "exporting" ? "Preparing…" : exportStatus === "done" ? "Exported ✓" : "Export"}
+            </Button>
+          }
+          style={{ padding: 0 }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
             <tbody>
               {ROWS.map((r) => (

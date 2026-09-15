@@ -45,6 +45,7 @@ export function Roster() {
   const [tab, setTab] = React.useState("members");
   const [query, setQuery] = React.useState("");
   const [composerOpen, setComposerOpen] = React.useState(false);
+  const [composerScope, setComposerScope] = React.useState(tab);
 
   const rows = TAB_ROWS[tab];
   const filtered = query.trim()
@@ -53,7 +54,7 @@ export function Roster() {
 
   const recipientOptions = [
     ...TAB_SCOPES,
-    ...MEMBERS.map((m) => ({ value: "member:" + m.name, label: m.name })),
+    ...[...MEMBERS, ...WAITLIST, ...SITES].map((m) => ({ value: "member:" + m.name, label: m.name })),
   ];
 
   return (
@@ -67,7 +68,7 @@ export function Roster() {
         </div>
         <div style={{ display: "flex", gap: "var(--space-3)" }}>
           <Button variant="outline" iconLeft={<Download style={{ width: 18, height: 18 }} />}>Pickup sheet</Button>
-          <Button onClick={() => setComposerOpen(true)} iconLeft={<Mail style={{ width: 18, height: 18 }} />}>Send a note</Button>
+          <Button onClick={() => { setComposerScope(tab); setComposerOpen(true); }} iconLeft={<Mail style={{ width: 18, height: 18 }} />}>Send a note</Button>
         </div>
       </div>
 
@@ -102,7 +103,10 @@ export function Roster() {
                 <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)" }}><Badge tone={m.status[0]}>{m.status[1]}</Badge></td>
                 <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontFamily: "var(--type-data-family)", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{m.since}</td>
                 <td style={{ padding: "var(--space-3) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", textAlign: "right" }}>
-                  <IconButton label={"Message " + m.name}><MessageSquare style={{ width: 18, height: 18 }} /></IconButton>
+                  <IconButton label={"Message " + m.name}
+                    onClick={() => { setComposerScope("member:" + m.name); setComposerOpen(true); }}>
+                    <MessageSquare style={{ width: 18, height: 18 }} />
+                  </IconButton>
                 </td>
               </tr>
             ))}
@@ -114,7 +118,7 @@ export function Roster() {
         <NoteComposer
           onClose={() => setComposerOpen(false)}
           recipientOptions={recipientOptions}
-          initialScope={tab}
+          initialScope={composerScope}
         />
       ) : null}
     </div>
