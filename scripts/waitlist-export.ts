@@ -13,7 +13,10 @@ const COLUMNS = [
 
 function csvCell(value: string | null): string {
   if (value === null) return "";
-  return /[",\r\n]/.test(value) ? `"${value.replaceAll('"', '""')}"` : value;
+  // Spreadsheet apps evaluate a cell starting with =, +, -, @, tab, or CR as a
+  // formula. Every value here is free text a stranger typed into a public form.
+  const text = /^[=+\-@\t\r]/.test(value) ? `'${value}` : value;
+  return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
 async function main() {

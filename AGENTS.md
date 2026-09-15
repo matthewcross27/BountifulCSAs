@@ -119,9 +119,9 @@ auth, Inngest jobs, and the buyer storefront are not yet built.
   in any newly supplied optional answers; `lib/waitlist.ts` holds the honeypot field name and the
   share-count options both the form and the validator use. Read the table with
   `npm run waitlist:export` (CSV to stdout).
-- The demo video slot is empty on purpose: set `DEMO_VIDEO_SRC` at the top of
-  `components/landing/DemoSection.tsx` to a path under `public/` and the poster panel becomes a
-  real `<video>`.
+- The demo video slot is a placeholder poster panel on purpose; there is no video element yet.
+  `components/landing/DemoSection.tsx` marks inline the single spot where the real `<video>`
+  replaces that panel once the file exists.
 - `components/landing/landing.css` holds every breakpoint. Two traps it documents inline: sections
   combine `.landing-shell` with `.landing-header`/`.landing-section`, so those must use
   `padding-inline`/`padding-block` rather than the `padding` shorthand; and `Button` plus `Field`

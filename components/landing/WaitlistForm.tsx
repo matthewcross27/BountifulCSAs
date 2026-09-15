@@ -145,13 +145,7 @@ export function WaitlistForm({
           size="lg"
           fullWidth={layout === "stacked"}
           disabled={status === "submitting"}
-          style={
-            layout === "inline"
-              ? { alignSelf: "flex-end", flex: "0 0 auto", ...(dark ? { borderColor: "var(--sun-100)", boxShadow: "var(--shadow-sticker-cream)" } : null) }
-              : dark
-                ? { borderColor: "var(--sun-100)", boxShadow: "var(--shadow-sticker-cream)" }
-                : undefined
-          }
+          style={dark ? { borderColor: "var(--sun-100)", boxShadow: "var(--shadow-sticker-cream)" } : undefined}
         >
           {status === "submitting" ? "Saving..." : submitLabel}
         </Button>

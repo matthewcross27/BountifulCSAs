@@ -156,6 +156,13 @@
   min-width: 0;
 }
 
+/* Sizing lives here, not inline on the Button: an inline declaration would
+   outrank the wrapped-row override below. */
+.landing-form-row > button[type="submit"] {
+  align-self: flex-end;
+  flex: 0 0 auto;
+}
+
 /* Once the row has wrapped there is no reason for a button narrower than the
    field above it. */
 @media (max-width: 559.98px) {

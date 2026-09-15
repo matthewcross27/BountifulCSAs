@@ -18,5 +18,10 @@ export const FIELD_LIMITS = {
   region: 120,
 } as const;
 
-/** The field the spam guard watches: real people never see it, bots fill it in. */
-export const HONEYPOT_FIELD = "website";
+/**
+ * The field the spam guard watches: real people never see it, bots fill it in.
+ * Deliberately meaningless - a semantic name like `website` gets filled by
+ * password managers and autofill heuristics, which would silently drop a real
+ * grower's signup.
+ */
+export const HONEYPOT_FIELD = "hp_field_1";
