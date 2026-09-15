@@ -21,9 +21,12 @@ the buyer storefront are not yet built.
   the assistant panel — all in-memory `useState`, no backend yet.
 - `components/dashboard/{Shell,WeekView,BoxPlanner,Roster,Money,Payments,Assistant}.tsx` are the
   screens, ported faithfully from a Claude Design prototype (mock data and copy intentionally
-  unchanged, except `Payments` which is a real feature - see below - and the Farmstore/Season
-  recap placeholder copy, rewritten to farmer-facing language). `Farmstore` and `Season recap`
-  are a deliberate empty state, not implemented views; their nav items are visible-but-disabled
+  unchanged except where noted here). `Payments` is a real feature - see below. The Farmstore/
+  Season recap placeholder copy was rewritten to farmer-facing language. `WeekView`, `BoxPlanner`,
+  `Roster`, and `Money`'s switches, search/filter inputs, tabs, and add-item form - inert in the
+  prototype - are now wired to real (still in-memory, no-backend) `useState`; `Roster`'s
+  Waitlist/Pickup sites tabs added their own mock row data for this. `Farmstore` and `Season
+  recap` are a deliberate empty state, not implemented views; their nav items are visible-but-disabled
   (`aria-disabled`, not the native `disabled` attribute, to keep them in tab order) with a
   CSS-only `:hover`/`:focus-within` tooltip (`Shell.css` `.dashboard-nav-tooltip`) reading
   "Coming soon".
