@@ -19,8 +19,9 @@ export function Switch({ checked = false, onChange, label, hint, disabled = fals
         {hint ? <span style={{ display: "block", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{hint}</span> : null}
       </span>
       <input type="checkbox" role="switch" checked={checked} onChange={onChange} disabled={disabled}
+        {...rest}
         className="switch-input"
-        style={{ position: "absolute", opacity: 0, width: 0, height: 0 }} {...rest} />
+        style={{ position: "absolute", opacity: 0, width: 0, height: 0 }} />
       <span aria-hidden="true" className="switch-track" style={{
         width: 46, height: 26, flex: "none", borderRadius: "var(--radius-pill)",
         background: checked ? "var(--leaf-600)" : "var(--paper-400)",

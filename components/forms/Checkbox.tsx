@@ -27,9 +27,9 @@ export function Checkbox({ checked = false, onChange, label, hint, disabled = fa
     >
       <input
         type="checkbox" checked={checked} onChange={onChange} disabled={disabled}
+        {...rest}
         className="checkbox-input"
         style={{ position: "absolute", opacity: 0, width: 0, height: 0 }}
-        {...rest}
       />
       <span aria-hidden="true" className="checkbox-box" style={{
         width: 22, height: 22, flex: "none", marginTop: 1,
