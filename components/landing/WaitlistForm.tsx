@@ -152,6 +152,7 @@ export function WaitlistForm({
           // the type rather than disabling keeps the page's primary call to action
           // from server-rendering greyed out for every visitor.
           type={hydrated ? "submit" : "button"}
+          className="landing-form-submit"
           variant="sticker"
           size="lg"
           fullWidth={layout === "stacked"}

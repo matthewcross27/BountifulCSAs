@@ -162,7 +162,7 @@
 
 /* Sizing lives here, not inline on the Button: an inline declaration would
    outrank the wrapped-row override below. */
-.landing-form-row > button[type="submit"] {
+.landing-form-row > .landing-form-submit {
   align-self: flex-end;
   flex: 0 0 auto;
 }
@@ -172,7 +172,7 @@
    12px (gap) + ~180px (widest label); the threshold rounds up from that so a
    fallback font with wider metrics still trips it. */
 @container (max-width: 434px) {
-  .landing-form-row > button[type="submit"] {
+  .landing-form-row > .landing-form-submit {
     flex: 1 1 100%;
   }
 }
