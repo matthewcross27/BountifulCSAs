@@ -109,6 +109,24 @@ the buyer storefront are not yet built.
   `.env.local` (gitignored, test-mode key). For local webhook testing:
   `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
 
+## Demo video (screencast-axi)
+
+- The landing page's demo clip is produced by `screencast-axi` (pinned devDependency) from
+  `screencast.config.ts` + `scenarios/product-tour.ts`; deliverables land in `public/demo/`
+  (mp4/webm/poster + `manifest.json`) and are committed. `npm run demo:rehearse` is the cheap
+  loop - it checks every selector without encoding; `npm run demo:record` shoots the take.
+  Run `npm run db:push && npm run db:seed` and `next dev` first, and pass
+  `SCREENCAST_BASE_URL` when dev did not get port 3000.
+- Both scripts need `NODE_OPTIONS=--import=tsx`: Node 22.14 crashes in its `require(esm)`
+  interop when the tool registers `tsx` lazily, mid-run, to read a `.ts` config. Registering it
+  up front takes the working path. Drop the flag when this project's Node moves past 22.14.
+- Playwright fixes the video canvas at context creation, so `setViewportSize()` mid-take does
+  not reframe a clip - it pins the page to a corner and greys the rest. The phone beat therefore
+  loads `/dashboard` into a 390px-wide iframe (a media query inside an iframe reads the iframe's
+  own viewport, so the `<1024px` drawer layout is the real one). Reuse that approach rather than
+  resizing. The scenario's comments carry the rest of the reasoning, including why the outer
+  document's drawn cursor has to be suppressed once the pointer enters the frame.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.
