@@ -145,10 +145,14 @@
 
 /* ---- Waitlist form ---- */
 
+/* A query container, because the row wraps on its own width and not the
+   viewport's: in the closing card it sits in one half of a two-column grid
+   inside a padded card, so a viewport media query fires at the wrong moments. */
 .landing-form-row {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+  container-type: inline-size;
 }
 
 .landing-form-row > .landing-form-email {
@@ -164,8 +168,10 @@
 }
 
 /* Once the row has wrapped there is no reason for a button narrower than the
-   field above it. */
-@media (max-width: 559.98px) {
+   field above it. The row stops fitting on one line at 220px (field basis) +
+   12px (gap) + ~180px (widest label); the threshold rounds up from that so a
+   fallback font with wider metrics still trips it. */
+@container (max-width: 434px) {
   .landing-form-row > button[type="submit"] {
     flex: 1 1 100%;
   }

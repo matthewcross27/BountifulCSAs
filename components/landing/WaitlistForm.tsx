@@ -35,6 +35,9 @@ export function WaitlistForm({
   const [status, setStatus] = React.useState<Status>("idle");
   const [error, setError] = React.useState("");
   const [detailsOpen, setDetailsOpen] = React.useState(false);
+  const [hydrated, setHydrated] = React.useState(false);
+
+  React.useEffect(() => setHydrated(true), []);
 
   const set = (key: keyof typeof EMPTY) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setValues((prev) => ({ ...prev, [key]: e.target.value }));
@@ -144,12 +147,29 @@ export function WaitlistForm({
           variant="sticker"
           size="lg"
           fullWidth={layout === "stacked"}
-          disabled={status === "submitting"}
+          disabled={!hydrated || status === "submitting"}
           style={dark ? { borderColor: "var(--sun-100)", boxShadow: "var(--shadow-sticker-cream)" } : undefined}
         >
           {status === "submitting" ? "Saving..." : submitLabel}
         </Button>
       </div>
+
+      <noscript>
+        <p
+          style={{
+            margin: 0,
+            fontSize: "var(--text-sm)",
+            lineHeight: "var(--leading-relaxed)",
+            color: dark ? "var(--leaf-100)" : "var(--text-muted)",
+          }}
+        >
+          This form needs JavaScript to send. With it switched off, email{" "}
+          <a href="mailto:hello@bountifulcsas.com" style={{ color: "inherit" }}>
+            hello@bountifulcsas.com
+          </a>{" "}
+          and we&rsquo;ll add you to the list by hand.
+        </p>
+      </noscript>
 
       {status === "error" ? (
         <p
