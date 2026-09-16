@@ -23,6 +23,8 @@ type Status = "idle" | "submitting" | "done" | "error";
 
 const EMPTY = { email: "", farmName: "", shareCount: "", growingPractices: "", region: "" };
 
+const subscribeNever = () => () => {};
+
 export function WaitlistForm({
   idPrefix,
   tone = "card",
@@ -35,9 +37,10 @@ export function WaitlistForm({
   const [status, setStatus] = React.useState<Status>("idle");
   const [error, setError] = React.useState("");
   const [detailsOpen, setDetailsOpen] = React.useState(false);
-  const [hydrated, setHydrated] = React.useState(false);
-
-  React.useEffect(() => setHydrated(true), []);
+  // False on the server and through the hydrating render, true afterwards.
+  // useSyncExternalStore rather than a setState-in-effect, which react-hooks
+  // rejects; nothing ever changes, so the subscribe callback is a no-op.
+  const hydrated = React.useSyncExternalStore(subscribeNever, () => true, () => false);
 
   const set = (key: keyof typeof EMPTY) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setValues((prev) => ({ ...prev, [key]: e.target.value }));
@@ -143,11 +146,16 @@ export function WaitlistForm({
           />
         </Field>
         <Button
-          type="submit"
+          // Not a submit button until hydration: a press before the React handler
+          // exists would otherwise fire a default GET that puts the grower's email
+          // in the URL bar, history, and referrer while storing nothing. Switching
+          // the type rather than disabling keeps the page's primary call to action
+          // from server-rendering greyed out for every visitor.
+          type={hydrated ? "submit" : "button"}
           variant="sticker"
           size="lg"
           fullWidth={layout === "stacked"}
-          disabled={!hydrated || status === "submitting"}
+          disabled={status === "submitting"}
           style={dark ? { borderColor: "var(--sun-100)", boxShadow: "var(--shadow-sticker-cream)" } : undefined}
         >
           {status === "submitting" ? "Saving..." : submitLabel}
