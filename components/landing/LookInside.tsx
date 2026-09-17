@@ -39,7 +39,11 @@ export function LookInside() {
 
         <div className="landing-pair">
           {SMALL_SHOTS.map((shot) => (
-            <div key={shot.src} style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+            <div
+              key={shot.src}
+              className="landing-shot-col"
+              style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}
+            >
               <div
                 style={{
                   border: "var(--stroke) solid var(--border-strong)",

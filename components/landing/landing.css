@@ -26,25 +26,25 @@
   background-size: var(--pattern-seed-size);
 }
 
-/* Panels read as labels stuck down on the page, not as soft cards. */
-.landing-cards-3 > *,
-.landing-pair > div {
+/* Panels read as labels stuck down on the page, not as soft cards. Scoped to
+   the bare divs that actually need the outline - ProblemSection's cards and
+   WhoItsFor's pair set their own border/box-shadow inline, which an external
+   class can never win against, so this only targets the how-it-works steps
+   and the look-inside screenshot columns. Padded here too, so the outline
+   doesn't sit hard against their text. */
+.landing-step,
+.landing-shot-col {
   border: var(--stroke-bold) solid var(--border-strong);
   box-shadow: var(--shadow-sticker);
+  padding: var(--space-6);
 }
 
-.landing-cards-3 > *:nth-child(even) {
+.landing-cards-3 > .landing-step:nth-child(even) {
   transform: rotate(-0.5deg);
 }
 
-.landing-cards-3 > *:nth-child(odd) {
+.landing-cards-3 > .landing-step:nth-child(odd) {
   transform: rotate(0.4deg);
-}
-
-/* The "how it works" steps are bare divs, so the outline above would otherwise
-   sit hard against their text. Pad them to match the problem cards. */
-.landing-step {
-  padding: var(--space-6);
 }
 
 .landing-glow {
