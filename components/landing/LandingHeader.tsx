@@ -16,7 +16,7 @@ export function LandingHeader() {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            height: "var(--control-h)",
+            minHeight: 44,
             padding: "0 var(--space-5)",
             borderRadius: "var(--radius-md)",
             background: "var(--action-primary)",

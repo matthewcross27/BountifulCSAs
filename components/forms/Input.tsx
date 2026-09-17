@@ -36,7 +36,10 @@ export function Input({
         type={type} value={value} onChange={onChange} placeholder={placeholder} disabled={disabled}
         onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}
         style={{
-          flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent",
+          // Fill the control's height: a short inner input leaves dead strips
+          // above and below it that look clickable but are not.
+          flex: 1, minWidth: 0, alignSelf: "stretch",
+          border: "none", outline: "none", background: "transparent",
           fontFamily: mono ? "var(--type-data-family)" : "var(--type-body-family)",
           fontSize: "var(--text-base)", color: "var(--text-strong)",
         }}

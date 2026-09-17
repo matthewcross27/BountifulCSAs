@@ -123,6 +123,11 @@ auth, Inngest jobs, and the buyer storefront are not yet built.
   with `preload="none"` so the clip costs nothing until a visitor presses play. Its heading states
   the running time, so re-cutting the video means re-checking that line against
   `public/demo/manifest.json`'s `durationMs`.
+- **TEMPORARY:** `components/landing/directions.{css,ts}` plus `DirectionSwitcher.tsx` are a
+  visual-direction explorer for the captain, reached at `/?ui=ledger|packet|table`. Each direction
+  only re-points design tokens, so nothing overrides a component's own styles. Delete those three
+  files, the `directions.css` import in `LandingPage.tsx`, and the `searchParams` read in
+  `app/page.tsx` to remove it; the default view does not depend on any of it.
 - `components/landing/landing.css` holds every breakpoint. Two traps it documents inline: sections
   combine `.landing-shell` with `.landing-header`/`.landing-section`, so those must use
   `padding-inline`/`padding-block` rather than the `padding` shorthand; and `Button` plus `Field`

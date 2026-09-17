@@ -202,6 +202,7 @@ export function WaitlistForm({
       <div>
         <button
           type="button"
+          className="landing-disclosure"
           aria-expanded={detailsOpen}
           aria-controls={detailsId}
           onClick={() => setDetailsOpen((open) => !open)}

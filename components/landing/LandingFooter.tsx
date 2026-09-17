@@ -16,7 +16,7 @@ export function LandingFooter() {
       }}
     >
       <span>Bountiful - CSA software for regenerative farms</span>
-      <a href="mailto:hello@bountifulcsas.com" style={{ color: "var(--text-muted)" }}>
+      <a className="landing-footer-link" href="mailto:hello@bountifulcsas.com" style={{ color: "var(--text-muted)" }}>
         hello@bountifulcsas.com
       </a>
     </footer>

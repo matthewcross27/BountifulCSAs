@@ -237,3 +237,37 @@
   outline: none;
   box-shadow: var(--ring-focus) !important;
 }
+
+/* ---- Part-one craft fixes ---- */
+
+/* Hit targets. The nav links, the footer address and the optional-fields
+   disclosure were 19-27px tall; pointer targets want ~44px. Padding grows the
+   target without moving the text off its baseline. */
+.landing-nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.landing-footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.landing-disclosure {
+  min-height: 44px;
+}
+
+/* Reduced motion: the sprout animation was already handled, but every
+   transition on the page kept running. Honour the preference wholesale. */
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
