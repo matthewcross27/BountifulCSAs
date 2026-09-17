@@ -1,9 +1,9 @@
 import type { CSSProperties } from "react";
 
 const PARAGRAPHS = [
-  "I spent a season living with organic market gardeners in Portugal, and I saw how little time a farm actually has. The growing was the easy part to love. It was the business side - the signups, the invoices, the endless texts - that pulled attention away from the field, day after day.",
-  "A CSA is one of the best openings an independent farm has: more leverage than wholesale, steadier demand than market days, and a community that's genuinely committed to the mission. But starting one, or running one well, usually costs exactly the hours you don't have.",
-  "So I'm building Bountiful to make that work as close to invisible as I can get it. Not another system to run - just the season's paperwork handled quietly in the background, so you can get back to what you do best.",
+  "I spent a season living with organic market gardeners in Portugal, and I saw how little time a farm has. The growing was the easy part to love. It was the business side - the signups, the invoices, the endless texts - that pulled attention away from the field, day after day.",
+  "A CSA is one of the best openings an independent farm has: more leverage than wholesale, steadier demand than market days, and a community that's committed to the mission. But starting one, or running one well, costs the hours you don't have.",
+  "So I'm building Bountiful to make that work as close to invisible as I can get it. The season's paperwork stays in the background, so you can get back to what you do best.",
 ];
 
 const STAMP: CSSProperties = {

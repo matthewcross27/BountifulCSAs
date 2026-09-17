@@ -28,7 +28,7 @@ const dmMono = DM_Mono({
 
 const TITLE = "Bountiful - CSA software for regenerative farms";
 const DESCRIPTION =
-  "Bountiful runs the business side of your CSA - signups, recurring payments, how much to plant, and the weekly note to members - so the admin stops taking the hours the field needs. Join the waitlist for the 2026 season.";
+  "Bountiful runs the business side of your CSA - signups, recurring payments, a season forecast you can plant against, and the weekly note to members - so you spend those hours in the field instead. Join the waitlist for the 2026 season.";
 
 export const metadata: Metadata = {
   title: {

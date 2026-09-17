@@ -40,8 +40,8 @@ export function OurStandard() {
             </h2>
             <p style={{ margin: 0, color: "var(--text-body)", fontSize: "var(--text-md)", lineHeight: "var(--leading-relaxed)", maxWidth: "46ch" }}>
               Bountiful isn&rsquo;t for anyone with a box to ship. We build for small independent farms
-              growing sustainably, ethically, and regeneratively - because those are the farms whose
-              seasons this software is shaped around.
+              growing sustainably, ethically, and regeneratively, because we shape the software
+              around their seasons.
             </p>
             <p style={{ margin: 0, fontFamily: "var(--type-note-family)", fontSize: 20, color: "var(--clay-700)" }}>
               Certification helps, practice matters more. Tell us how you grow.

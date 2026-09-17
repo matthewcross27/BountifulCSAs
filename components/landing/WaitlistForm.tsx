@@ -55,7 +55,7 @@ export function WaitlistForm({
 
     if (!values.email.trim()) {
       setStatus("error");
-      setError("Please enter your email address.");
+      setError("Enter your email address.");
       return;
     }
 
@@ -70,13 +70,13 @@ export function WaitlistForm({
       const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
       if (!res.ok || !data?.ok) {
         setStatus("error");
-        setError(data?.error ?? "Something went wrong on our end. Please try again in a moment.");
+        setError(data?.error ?? "We couldn't save your details. Try again in a moment.");
         return;
       }
       setStatus("done");
     } catch {
       setStatus("error");
-      setError("We couldn't reach the server. Please check your connection and try again.");
+      setError("We couldn't reach the server. Check your connection and send it again.");
     }
   }
 

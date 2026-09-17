@@ -25,10 +25,10 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return fail("We couldn't read that submission. Please try again.");
+    return fail("We couldn't read that submission. Send it again.");
   }
   if (typeof body !== "object" || body === null) {
-    return fail("We couldn't read that submission. Please try again.");
+    return fail("We couldn't read that submission. Send it again.");
   }
   const payload = body as Record<string, unknown>;
 
@@ -39,13 +39,13 @@ export async function POST(request: Request) {
   }
 
   const rawEmail = readString(payload.email, FIELD_LIMITS.email);
-  if (!rawEmail) return fail("Please enter your email address.");
+  if (!rawEmail) return fail("Enter your email address.");
   const email = rawEmail.toLowerCase();
-  if (!EMAIL_RE.test(email)) return fail("That doesn't look like an email address - please check it.");
+  if (!EMAIL_RE.test(email)) return fail("That doesn't look like an email address. Check it and send it again.");
 
   const shareCountInput = readString(payload.shareCount, 60);
   if (shareCountInput !== null && !SHARE_COUNT_OPTIONS.includes(shareCountInput as never)) {
-    return fail("Please pick one of the listed share ranges.");
+    return fail("Pick one of the listed share ranges.");
   }
 
   const now = new Date().toISOString();
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("waitlist signup failed", error);
-    return fail("Something went wrong on our end. Please try again in a moment.", 500);
+    return fail("We couldn't save your details. Try again in a moment.", 500);
   }
 
   return NextResponse.json({ ok: true });

@@ -5,7 +5,7 @@ const SMALL_SHOTS = [
   {
     src: "/screenshots/box-planner.png",
     alt: "The Bountiful box planner: this week's box items with quantities, a running share count, and a publish action.",
-    note: "It starts from what came out of the field, not a template.",
+    note: "It starts from what came out of the field this week.",
   },
   {
     src: "/screenshots/payments.png",

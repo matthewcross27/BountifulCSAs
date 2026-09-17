@@ -39,8 +39,8 @@ export function Hero() {
             }}
           >
             Bountiful runs the business side of your CSA - signups, recurring payments, a season
-            forecast you can plant against, and the weekly note to members - so the admin stops
-            taking the hours the field needs.
+            forecast you can plant against, and the weekly note to members - so you spend those
+            hours in the field instead.
           </p>
         </div>
 
