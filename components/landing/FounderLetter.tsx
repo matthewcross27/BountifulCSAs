@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 const PARAGRAPHS = [
   "I spent a season living with organic market gardeners in Portugal, and I saw how little time a farm actually has. The growing was the easy part to love. It was the business side - the signups, the invoices, the endless texts - that pulled attention away from the field, day after day.",
   "A CSA is one of the best openings an independent farm has: more leverage than wholesale, steadier demand than market days, and a community that's genuinely committed to the mission. But starting one, or running one well, usually costs exactly the hours you don't have.",
-  "So I'm building Bountiful to make that work as close to invisible as I can get it. Signups, recurring payments, how much to plant, the weekly note to everyone counting on a box - handled, so you can get back to what you do best.",
+  "So I'm building Bountiful to make that work as close to invisible as I can get it. Not another system to run - just the season's paperwork handled quietly in the background, so you can get back to what you do best.",
 ];
 
 const STAMP: CSSProperties = {
@@ -27,7 +27,11 @@ export function FounderLetter() {
     >
       <div
         style={{
-          maxWidth: 1180,
+          // em, not rem: the sheet scales with the letter's own type size, so the
+          // measure stays ~67 characters at every width instead of running long
+          // in the middle of the range.
+          fontSize: "var(--text-fluid-letter)",
+          maxWidth: "min(36em, 100%)",
           margin: "0 auto",
           padding: "clamp(2.75rem, 5.5vw, 5.25rem) var(--gutter) clamp(2.5rem, 5vw, 4.5rem)",
         }}
@@ -57,8 +61,7 @@ export function FounderLetter() {
             marginTop: "clamp(1.75rem, 3.5vw, 2.75rem)",
             display: "flex",
             flexDirection: "column",
-            gap: "var(--space-5)",
-            maxWidth: "70ch",
+            gap: "var(--space-6)",
           }}
         >
           <p
@@ -78,10 +81,9 @@ export function FounderLetter() {
               key={text.slice(0, 24)}
               style={{
                 margin: 0,
-                fontSize: "var(--text-fluid-lede)",
-                lineHeight: 1.75,
+                fontSize: "var(--text-fluid-letter)",
+                lineHeight: 1.7,
                 color: "var(--text-body)",
-                maxWidth: "66ch",
               }}
             >
               {text}
@@ -91,10 +93,9 @@ export function FounderLetter() {
           <p
             style={{
               margin: 0,
-              fontSize: "var(--text-fluid-lede)",
-              lineHeight: 1.75,
+              fontSize: "var(--text-fluid-letter)",
+              lineHeight: 1.7,
               color: "var(--text-muted)",
-              maxWidth: "66ch",
             }}
           >
             And only for farms growing sustainably, ethically, and regeneratively. That&rsquo;s the whole list.

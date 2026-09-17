@@ -119,15 +119,18 @@ auth, Inngest jobs, and the buyer storefront are not yet built.
   in any newly supplied optional answers; `lib/waitlist.ts` holds the honeypot field name and the
   share-count options both the form and the validator use. Read the table with
   `npm run waitlist:export` (CSV to stdout).
-- The demo video slot is a placeholder poster panel on purpose; there is no video element yet.
-  `components/landing/DemoSection.tsx` marks inline the single spot where the real `<video>`
-  replaces that panel once the file exists.
+- `components/landing/DemoSection.tsx` plays the recorded tour from `public/demo/` (see below)
+  with `preload="none"` so the clip costs nothing until a visitor presses play. Its heading states
+  the running time, so re-cutting the video means re-checking that line against
+  `public/demo/manifest.json`'s `durationMs`.
 - `components/landing/landing.css` holds every breakpoint. Two traps it documents inline: sections
   combine `.landing-shell` with `.landing-header`/`.landing-section`, so those must use
   `padding-inline`/`padding-block` rather than the `padding` shorthand; and `Button` plus `Field`
   set `box-shadow`/`color` inline, which outranks both `base.css`'s `:focus-visible` ring and any
   plain class rule — the ring needs `!important` and the label colors are re-pointed through the
   tokens their inline styles read.
+- The product mark is `components/core/Wordmark.tsx`, shared by the dashboard shell and the
+  landing header so the two cannot drift. Render it rather than re-writing the markup.
 - Dashboard screenshots in "A look inside" are committed under `public/screenshots/` and served
   through `next/image`. Recapture them by running the app and driving `/dashboard?view=week|box|
   payments` with Playwright at 2x, hiding `nextjs-portal` first.

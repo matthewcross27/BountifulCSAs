@@ -1,5 +1,13 @@
 import { BrowserFrame } from "./BrowserFrame";
 
+// The recorded product tour. Deliverables come from `npm run demo:record`
+// (screencast-axi) and are committed under public/demo; see AGENTS.md.
+const POSTER = "/demo/product-tour.webp";
+const SOURCES = [
+  { src: "/demo/product-tour.webm", type: "video/webm" },
+  { src: "/demo/product-tour.mp4", type: "video/mp4" },
+];
+
 export function DemoSection() {
   return (
     <section className="landing-shell" aria-labelledby="demo-heading" style={{ paddingBottom: "var(--space-9)" }}>
@@ -13,7 +21,7 @@ export function DemoSection() {
         }}
       >
         <h2 id="demo-heading" style={{ fontSize: "clamp(1.5rem, 2.6vw, 2rem)" }}>
-          See a season run in two minutes
+          See a season run in under two minutes
         </h2>
         <span style={{ fontFamily: "var(--type-note-family)", fontSize: 19, color: "var(--clay-700)" }}>
           walkthrough, no signup needed
@@ -21,51 +29,20 @@ export function DemoSection() {
       </div>
 
       <BrowserFrame colorDots urlLabel="bountifulcsas.com / demo">
-        {/* The real <video> replaces this panel - this is the only place it goes. */}
-        <div
-          style={{
-            aspectRatio: "16 / 9",
-            minHeight: 220,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "var(--space-4)",
-            padding: "var(--space-6)",
-            textAlign: "center",
-            background: "linear-gradient(180deg, var(--leaf-800) 0%, var(--leaf-900) 100%)",
-          }}
+        {/* preload="none": the poster is all a visitor gets until they press play,
+            so the 3MB tour costs nothing to anyone who scrolls past. */}
+        <video
+          controls
+          preload="none"
+          poster={POSTER}
+          playsInline
+          aria-label="Product tour: a week of a CSA season run from the Bountiful farmer dashboard"
+          style={{ display: "block", width: "100%", aspectRatio: "16 / 9", background: "var(--leaf-900)" }}
         >
-          <span
-            aria-hidden="true"
-            style={{
-              width: 76,
-              height: 76,
-              borderRadius: "var(--radius-pill)",
-              border: "var(--stroke-bold) solid var(--sun-100)",
-              background: "rgba(251, 235, 198, 0.12)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "var(--shadow-lg)",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-                width: 0,
-                height: 0,
-                marginLeft: 5,
-                borderLeft: "20px solid var(--sun-100)",
-                borderTop: "13px solid transparent",
-                borderBottom: "13px solid transparent",
-              }}
-            />
-          </span>
-          <p style={{ margin: 0, color: "var(--sun-300)", fontSize: "var(--text-md)", maxWidth: "36ch" }}>
-            We&rsquo;re filming the walkthrough now. It lands here before signups open.
-          </p>
-        </div>
+          {SOURCES.map((s) => (
+            <source key={s.src} src={s.src} type={s.type} />
+          ))}
+        </video>
       </BrowserFrame>
     </section>
   );

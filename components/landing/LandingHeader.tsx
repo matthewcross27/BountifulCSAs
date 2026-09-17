@@ -1,9 +1,10 @@
-import { BountifulMark } from "./BountifulMark";
+import { Wordmark } from "../core/Wordmark";
 
 export function LandingHeader() {
   return (
     <header className="landing-shell landing-header">
-      <BountifulMark />
+      {/* The product's own mark, shared with the dashboard shell so the two cannot drift. */}
+      <Wordmark fontSize="var(--text-md)" style={{ color: "var(--text-strong)" }} />
       <nav className="landing-nav" aria-label="Page sections">
         <div className="landing-nav-links">
           <a className="landing-nav-link" href="#practices">Our standard</a>

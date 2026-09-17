@@ -38,8 +38,9 @@ export function Hero() {
               maxWidth: "52ch",
             }}
           >
-            Bountiful runs the business side of your CSA - signups, recurring payments, how much to
-            plant, and the weekly note to members - so the admin stops taking the hours the field needs.
+            Bountiful runs the business side of your CSA - signups, recurring payments, a season
+            forecast you can plant against, and the weekly note to members - so the admin stops
+            taking the hours the field needs.
           </p>
         </div>
 
@@ -95,9 +96,6 @@ export function Hero() {
             >
               <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
                 Built for farms running 20-200 shares.
-              </span>
-              <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
-                Setup help and founding pricing for early farms.
               </span>
             </div>
           </div>

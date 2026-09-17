@@ -21,6 +21,7 @@
   --text-fluid-section: clamp(1.75rem, 3.2vw, 2.5rem);  /* 28 - 40 */
   --text-fluid-panel: clamp(1.625rem, 3vw, 2.25rem);    /* 26 - 36 */
   --text-fluid-lede: clamp(1.0625rem, 1.35vw, 1.1875rem); /* 17 - 19 */
+  --text-fluid-letter: clamp(1.0625rem, 1.1vw + 0.45rem, 1.3125rem); /* 17 - 21, the open letter */
 
   --weight-regular: 400;
   --weight-medium: 500;

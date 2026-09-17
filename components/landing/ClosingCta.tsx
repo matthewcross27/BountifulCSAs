@@ -47,9 +47,6 @@ export function ClosingCta() {
             <p style={{ margin: 0, color: "var(--leaf-100)", fontSize: "var(--text-md)", lineHeight: "var(--leading-relaxed)", maxWidth: "42ch" }}>
               Early farms get setup help, a say in what we build next, and founding pricing when we open.
             </p>
-            <p style={{ margin: 0, fontFamily: "var(--type-note-family)", fontSize: 20, color: "var(--sun-300)" }}>
-              Regenerative growers only - tell us how you farm.
-            </p>
           </div>
           <WaitlistForm idPrefix="closing-waitlist" tone="dark" layout="inline" submitLabel="Join the waitlist" />
         </div>

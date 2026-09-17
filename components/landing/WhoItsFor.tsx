@@ -19,8 +19,8 @@ export function WhoItsFor() {
         >
           <h3 style={{ fontSize: "var(--text-md)", color: "var(--leaf-900)" }}>A good fit if</h3>
           <p style={{ margin: 0, color: "var(--text-body)" }}>
-            You grow regeneratively, run 20-200 shares, take signups yourself, and want members
-            paying on time without you asking.
+            You take the signups yourself, at a scale where every member is still a name you
+            know rather than a row in a report.
           </p>
         </div>
         <div

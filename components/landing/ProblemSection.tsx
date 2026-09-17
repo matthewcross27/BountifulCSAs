@@ -7,8 +7,8 @@ const PROBLEMS = [
     body: "Names in email, money in three apps, shares in a spreadsheet you're afraid to sort.",
   },
   {
-    eyebrow: "Planting",
-    title: "Every bed is a guess",
+    eyebrow: "Forecasting",
+    title: "Demand is a guess",
     body: "You seed for the share count you hope for, then eat the gap in either direction.",
   },
   {
