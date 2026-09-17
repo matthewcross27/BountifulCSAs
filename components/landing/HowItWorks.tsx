@@ -12,7 +12,7 @@ export function HowItWorks() {
       </h2>
       <div className="landing-cards-3" style={{ marginTop: "var(--space-7)", gap: "var(--space-6)" }}>
         {STEPS.map((step, i) => (
-          <div key={step.title} style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          <div key={step.title} className="landing-step" style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
             <span
               aria-hidden="true"
               style={{

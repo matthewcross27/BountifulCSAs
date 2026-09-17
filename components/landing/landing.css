@@ -2,12 +2,49 @@
    Plain imported stylesheet, not <style jsx>: styled-jsx's client-side registry
    re-runs on hydration in this app and caused a real flash bug (see AGENTS.md). */
 
+/* The page's look: hand-cut corners, thick sticker shadows, warm paper - the
+   hand-annotated side of the product's language turned up. Scoped to .landing
+   so the dashboard keeps the quieter defaults. */
 .landing {
+  --surface-page: #F7EEDA;
+  --surface-card: #FFFCF3;
+  --radius-md: 14px 6px 16px 8px;
+  --radius-lg: 20px 12px 22px 10px;
+  --radius-xl: 28px 16px 30px 14px;
+  --shadow-sm: 2px 2px 0 var(--paper-400);
+  --shadow-md: 3px 3px 0 var(--paper-400);
+  --shadow-sticker: 5px 5px 0 var(--ink-900);
+  --shadow-sticker-leaf: 5px 5px 0 var(--leaf-700);
+  --shadow-sticker-cream: 5px 5px 0 var(--sun-100);
+  --border-hairline: var(--paper-400);
+  --pattern-seed-size: 18px 18px;
+
   position: relative;
   overflow-x: clip;
   background: var(--surface-page);
   background-image: var(--pattern-seed);
   background-size: var(--pattern-seed-size);
+}
+
+/* Panels read as labels stuck down on the page, not as soft cards. */
+.landing-cards-3 > *,
+.landing-pair > div {
+  border: var(--stroke-bold) solid var(--border-strong);
+  box-shadow: var(--shadow-sticker);
+}
+
+.landing-cards-3 > *:nth-child(even) {
+  transform: rotate(-0.5deg);
+}
+
+.landing-cards-3 > *:nth-child(odd) {
+  transform: rotate(0.4deg);
+}
+
+/* The "how it works" steps are bare divs, so the outline above would otherwise
+   sit hard against their text. Pad them to match the problem cards. */
+.landing-step {
+  padding: var(--space-6);
 }
 
 .landing-glow {
