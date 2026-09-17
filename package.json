@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "demo:rehearse": "NODE_OPTIONS=--import=tsx screencast-axi rehearse scenarios/product-tour.ts",
+    "demo:record": "NODE_OPTIONS=--import=tsx screencast-axi record scenarios/product-tour.ts",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
     "waitlist:export": "tsx scripts/waitlist-export.ts"
@@ -29,7 +31,9 @@
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "ffmpeg-static": "5.3.0",
     "playwright": "^1.63.0",
+    "screencast-axi": "0.1.6",
     "tsx": "^4.23.13",
     "typescript": "^5"
   }
