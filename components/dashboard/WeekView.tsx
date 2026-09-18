@@ -44,14 +44,14 @@ export function WeekView({ published, onPlan, onPublish, decisions = [] }: WeekV
         <Button size="lg" iconLeft={<Send style={{ width: 18, height: 18 }} />} onClick={onPublish}>Publish this box</Button>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--space-4)" }}>
+      <div className="dash-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--space-4)" }}>
         <Card><Stat label="MEMBERS" value="148" sub="of 160 shares sold" /></Card>
         <Card><Stat label="COLLECTED THIS WEEK" value="$4,218" tone="good" sub="Tuesday and Friday sites" /></Card>
         <Card><Stat label="NEEDS A RETRY" value="$57" tone="bad" sub="2 households" /></Card>
         <Card><Stat label="BOXES TO PACK" value="148" sub="112 barn · 36 market" /></Card>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
+      <div className="dash-two-col" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
         <Card eyebrow="WEEK 12 · DRAFT" title="Tuesday's box"
           action={<Button size="sm" variant="outline" onClick={onPlan}>Edit the box</Button>}
           note="last of the garlic — sorry!">

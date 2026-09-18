@@ -62,8 +62,8 @@ export function Assistant({ onClose, onDecision }: AssistantProps) {
   }
 
   return (
-    <aside style={{
-      position: "fixed", right: "var(--space-6)", bottom: "var(--space-6)", width: 380, zIndex: 40,
+    <aside className="dashboard-assistant" style={{
+      position: "fixed", right: "var(--space-6)", bottom: "var(--space-6)", width: 380, maxWidth: "calc(100vw - var(--space-6) * 2)", zIndex: 40,
       background: "var(--surface-card)", border: "2px solid var(--border-strong)",
       borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-lg)", overflow: "hidden",
       fontFamily: "var(--type-body-family)",

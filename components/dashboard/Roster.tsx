@@ -81,12 +81,12 @@ export function Roster() {
           ]} />
         </div>
 
-        <div style={{ padding: "var(--space-4) var(--space-5)", display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
-          <Input placeholder="Find a household" value={query} onChange={(e) => setQuery(e.target.value)} style={{ maxWidth: 280 }} />
+        <div className="dash-wrap-row" style={{ padding: "var(--space-4) var(--space-5)", display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
+          <Input placeholder="Find a household" value={query} onChange={(e) => setQuery(e.target.value)} style={{ maxWidth: 280, flex: "1 1 200px" }} />
           <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>Showing {filtered.length} of {TAB_TOTALS[tab]}</span>
         </div>
 
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
+        <table className="dash-table" style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
           <thead>
             <tr>
               {["Household", "Share", "Pickup", "Money", "Member since", ""].map((h) => (
@@ -97,12 +97,12 @@ export function Roster() {
           <tbody>
             {filtered.map((m) => (
               <tr key={m.name}>
-                <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{m.name}</td>
-                <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", color: "var(--text-body)" }}>{m.share}</td>
-                <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", color: "var(--text-body)" }}>{m.site}</td>
-                <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)" }}><Badge tone={m.status[0]}>{m.status[1]}</Badge></td>
-                <td style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontFamily: "var(--type-data-family)", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{m.since}</td>
-                <td style={{ padding: "var(--space-3) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", textAlign: "right" }}>
+                <td data-label="" style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{m.name}</td>
+                <td data-label="Share" style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", color: "var(--text-body)" }}>{m.share}</td>
+                <td data-label="Pickup" style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", color: "var(--text-body)" }}>{m.site}</td>
+                <td data-label="Money" style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)" }}><Badge tone={m.status[0]}>{m.status[1]}</Badge></td>
+                <td data-label="Member since" style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", fontFamily: "var(--type-data-family)", fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{m.since}</td>
+                <td data-label="" style={{ padding: "var(--space-3) var(--space-5)", borderBottom: "1px solid var(--border-hairline)", textAlign: "right" }}>
                   <IconButton label={"Message " + m.name}
                     onClick={() => { setComposerScope("member:" + m.name); setComposerOpen(true); }}>
                     <MessageSquare style={{ width: 18, height: 18 }} />

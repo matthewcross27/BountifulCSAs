@@ -60,11 +60,11 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
+      <div className="dash-two-col" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
         <Card eyebrow="LOGGED AT HARVEST" title="What came out of the field">
           <div style={{ display: "flex", flexDirection: "column" }}>
             {HARVEST.map((h) => (
-              <div key={h.name} style={{
+              <div key={h.name} className="dash-harvest-row" style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
                 padding: "var(--space-3) 0", borderBottom: "1px solid var(--border-hairline)",
                 opacity: qty[h.name] > 0 ? 1 : 0.6,
@@ -85,6 +85,7 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
           </div>
           <form
             onSubmit={(e) => { e.preventDefault(); addItem(); }}
+            className="dash-wrap-row"
             style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginTop: "var(--space-4)", padding: "var(--space-4)", border: "var(--rule-twine)", borderRadius: "var(--radius-md)" }}
           >
             <Plus style={{ width: 18, height: 18, color: "var(--text-faint)" }} />
