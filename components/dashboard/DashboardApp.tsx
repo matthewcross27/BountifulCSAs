@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
+import "./dashboard.css";
 import { Shell } from "./Shell";
 import type { ViewId } from "./Shell";
 import { WeekView } from "./WeekView";

@@ -45,7 +45,7 @@ export function Money() {
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--space-4)" }}>
+      <div className="dash-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "var(--space-4)" }}>
         <Card><Stat label="SEASON TO DATE" value="$86,410" tone="good" sub="of $94,000 committed" /></Card>
         <Card><Stat label="THIS WEEK" value="$4,218" sub="148 boxes" /></Card>
         <Card><Stat label="NEEDS A RETRY" value="$57" tone="bad" sub="2 households" /></Card>
@@ -65,7 +65,7 @@ export function Money() {
           : "Both boxes are still theirs. Bountiful will try again Friday and let you know either way."}
       </Callout>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
+      <div className="dash-two-col" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "var(--space-5)", alignItems: "start" }}>
         <Card title="Share payments"
           action={
             <Button size="sm" variant="quiet" disabled={exportStatus !== "idle"} onClick={handleExport}>
@@ -73,16 +73,16 @@ export function Money() {
             </Button>
           }
           style={{ padding: 0 }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
+          <table className="dash-table" style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
             <tbody>
               {ROWS.map((r) => (
                 <tr key={r[0]}>
-                  <td style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)" }}>
+                  <td data-label="" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)" }}>
                     <div style={{ fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{r[0]}</div>
                     <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>{r[1]}</div>
                   </td>
-                  <td style={{ padding: "var(--space-4) 0", borderTop: "1px solid var(--border-hairline)", textAlign: "right", fontFamily: "var(--type-data-family)", color: "var(--text-strong)" }}>{r[2]}</td>
-                  <td style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)", textAlign: "right" }}><Badge tone={r[3][0]}>{r[3][1]}</Badge></td>
+                  <td data-label="Amount" style={{ padding: "var(--space-4) 0", borderTop: "1px solid var(--border-hairline)", textAlign: "right", fontFamily: "var(--type-data-family)", color: "var(--text-strong)" }}>{r[2]}</td>
+                  <td data-label="" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)", textAlign: "right" }}><Badge tone={r[3][0]}>{r[3][1]}</Badge></td>
                 </tr>
               ))}
             </tbody>

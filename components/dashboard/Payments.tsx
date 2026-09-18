@@ -129,7 +129,7 @@ export function Payments() {
         </Callout>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "var(--space-4)" }}>
+      <div className="dash-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "var(--space-4)" }}>
         <Card><Stat label="COLLECTED" value={formatCents(totals.collected, "usd")} tone="good" sub="from mirrored charges" /></Card>
         <Card><Stat label="REFUNDED" value={formatCents(totals.refunded, "usd")} tone={totals.refunded ? "bad" : "default"} /></Card>
         <Card>
@@ -149,20 +149,20 @@ export function Payments() {
             Nothing yet - charges, refunds, and payouts will show up here as they happen.
           </p>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
+          <table className="dash-table" style={{ width: "100%", borderCollapse: "collapse", fontSize: "var(--text-base)" }}>
             <tbody>
               {data.events.map((e) => (
                 <tr key={e.id}>
-                  <td style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)" }}>
+                  <td data-label="" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)" }}>
                     <div style={{ fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{eventLabel(e.type)}</div>
                     <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
                       {new Date(e.occurredAt).toLocaleString()}
                     </div>
                   </td>
-                  <td style={{ padding: "var(--space-4) 0", borderTop: "1px solid var(--border-hairline)", textAlign: "right", fontFamily: "var(--type-data-family)", color: "var(--text-strong)" }}>
+                  <td data-label="Amount" style={{ padding: "var(--space-4) 0", borderTop: "1px solid var(--border-hairline)", textAlign: "right", fontFamily: "var(--type-data-family)", color: "var(--text-strong)" }}>
                     {formatCents(e.amountCents, e.currency)}
                   </td>
-                  <td style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)", textAlign: "right" }}>
+                  <td data-label="" style={{ padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--border-hairline)", textAlign: "right" }}>
                     <Badge tone={eventTone(e.type, e.status)}>{e.status ?? eventLabel(e.type)}</Badge>
                   </td>
                 </tr>

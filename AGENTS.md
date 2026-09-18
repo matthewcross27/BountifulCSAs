@@ -45,6 +45,16 @@ auth, Inngest jobs, and the buyer storefront are not yet built.
   scoping only tags JSX elements written directly in that file - classes passed as a prop into a
   child component (e.g. `IconButton`) never receive the scoping attribute and scoped rules won't
   match them.
+- The dashboard content views (`WeekView`, `BoxPlanner`, `Roster`, `Money`, `Payments`) are
+  responsive down to ~320px using the same plain-`.css`-import pattern:
+  `components/dashboard/dashboard.css` (imported once from `DashboardApp.tsx`) holds shared
+  `!important` breakpoint rules - `.dash-stat-grid` and `.dash-two-col` collapse the hardcoded
+  inline `gridTemplateColumns` splits, `.dash-table` turns a wide data table into labeled cards
+  below 640px (every `<td>` needs a `data-label` attribute, empty string for columns that don't
+  need one, e.g. a trailing icon-button column), and `.dashboard-assistant` keeps the floating
+  "Ask Bountiful" panel from overflowing narrow viewports. `Farmstore`/`Season recap` and the
+  Assistant panel's own scripted content were left as-is - they're either an empty state or
+  already narrow enough not to need mobile-specific treatment.
 - `components/{core,forms,navigation,overlay}/*.tsx` are the shared design-system components
   (Button, Card, Switch, Dialog, etc.), each typed against the prop contract of the same-named
   source `.d.ts` in the original design export.
