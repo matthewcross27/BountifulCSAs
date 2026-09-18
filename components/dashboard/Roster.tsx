@@ -73,7 +73,7 @@ export function Roster() {
       </div>
 
       <Card style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "var(--space-4) var(--space-5) 0" }}>
+        <div className="dash-tabs-scroll" style={{ padding: "var(--space-4) var(--space-5) 0" }}>
           <Tabs value={tab} onChange={setTab} tabs={[
             { value: "members", label: "Members", count: 148 },
             { value: "waitlist", label: "Waitlist", count: 12 },

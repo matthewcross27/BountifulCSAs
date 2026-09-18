@@ -84,6 +84,15 @@
   }
 }
 
+/* Roster's tab bar (Members/Waitlist/Pickup sites): Tabs never wraps, and the
+   Card around it clips overflow, so the third tab is invisible below ~480px.
+   Let the bar scroll horizontally instead so every tab stays reachable. */
+@media (max-width: 640px) {
+  .dash-tabs-scroll {
+    overflow-x: auto !important;
+  }
+}
+
 /* Rows that pair a control with inline text (BoxPlanner's add-item form,
    Roster's search/count row): let them wrap instead of forcing an overflow. */
 @media (max-width: 480px) {
