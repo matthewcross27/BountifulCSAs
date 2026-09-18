@@ -155,7 +155,7 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
       </nav>
 
       <main inert={drawerOpen || undefined} style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
-        <header className="dashboard-header" style={{
+        <header style={{
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
           padding: "var(--space-4) var(--gutter)", borderBottom: "1px solid var(--border-hairline)",
           background: "var(--paper-000)",
@@ -174,7 +174,7 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
               {drawerOpen ? <X style={{ width: 20, height: 20 }} /> : <Menu style={{ width: 20, height: 20 }} />}
             </IconButton>
             <span style={{ fontSize: "var(--text-2xs)", fontWeight: "var(--weight-bold)", textTransform: "uppercase", letterSpacing: "var(--tracking-stamp)", color: "var(--leaf-700)", border: "1.5px solid var(--leaf-300)", borderRadius: "var(--radius-xs)", padding: "4px 8px", flex: "none" }}>WEEK 12</span>
-            <span className="dashboard-header-meta" style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>2026 season · week of July 14 · pickup Tuesday</span>
+            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>2026 season · week of July 14 · pickup Tuesday</span>
           </div>
           <div style={{ display: "flex", gap: "var(--space-2)", flex: "none" }}>
             <IconButton label="Weather" variant="outline"><CloudSun style={{ width: 20, height: 20 }} /></IconButton>

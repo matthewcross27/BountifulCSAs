@@ -74,7 +74,7 @@ export function BoxPlanner({ onPublish }: BoxPlannerProps) {
               </div>
             ))}
             {extraItems.map((item) => (
-              <div key={item.id} style={{
+              <div key={item.id} className="dash-harvest-row" style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)",
                 padding: "var(--space-3) 0", borderBottom: "1px solid var(--border-hairline)",
               }}>
