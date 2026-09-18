@@ -1,0 +1,45 @@
+[
+  {
+    "id": "product-tour",
+    "title": "Bountiful CSAs: a week on the farmer dashboard",
+    "description": "One week of a CSA season run from the farmer dashboard: building the box, the member list, the weekly note, the money, a pricing decision, and the same thing on a phone.",
+    "steps": [
+      "Tuesday morning. The whole week on one screen.",
+      "148 shares sold, $4,218 collected, two of this week's jobs already handled.",
+      "This week's box starts from what actually came out of the field.",
+      "Forgot to log the sorrel? Add it, and every member sees it.",
+      "Swaps are on by default. Turn them off the week you can't cover them.",
+      "Every household, the waitlist and all three pickup sites - one list.",
+      "Twelve people waiting on a share. Nobody living in a spreadsheet.",
+      "Find one household without scrolling past the other 147.",
+      "The Thursday note that used to eat an evening.",
+      "Write it once. It goes to all 148.",
+      "Sent.",
+      "The money, already reconciled - payment plans, sliding scale, all of it.",
+      "Two cards declined. Retry both without chasing anybody.",
+      "And the part software usually can't do: ask.",
+      "Next season's price. One tap sets up renewal.",
+      "The decision is waiting on your week when you come back in.",
+      "All of it works from the barn.",
+      "Same season. One thumb."
+    ],
+    "width": 1280,
+    "height": 720,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "durationMs": 105423,
+    "recordedAt": "2026-09-16T13:12:00.774Z",
+    "pace": 1,
+    "formats": [
+      "mp4",
+      "webm",
+      "webp"
+    ],
+    "sourceHash": "acffe489251b2bf1",
+    "sourceFile": "../../scenarios/product-tour.ts",
+    "stepsHash": "29f9301cbdeab4be",
+    "recorderVersion": "0.1.6"
+  }
+]

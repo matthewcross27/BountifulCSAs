@@ -18,6 +18,7 @@
   --shadow-lg: 0 10px 28px rgba(35, 31, 24, 0.12);
   --shadow-sticker: 3px 3px 0 var(--ink-900);
   --shadow-sticker-leaf: 3px 3px 0 var(--leaf-700);
+  --shadow-sticker-cream: 3px 3px 0 var(--sun-100);
   --shadow-inset: inset 0 1px 0 rgba(255, 253, 247, 0.7);
 
   --ring-focus: 0 0 0 3px color-mix(in oklch, var(--focus-ring) 55%, transparent);

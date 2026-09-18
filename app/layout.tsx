@@ -26,9 +26,28 @@ const dmMono = DM_Mono({
   weight: ["400", "500"],
 });
 
+const TITLE = "Bountiful - CSA software for regenerative farms";
+const DESCRIPTION =
+  "Bountiful runs the business side of your CSA - signups, recurring payments, a season forecast you can plant against, and the weekly note to members - so you spend those hours in the field instead. Join the waitlist for the 2026 season.";
+
 export const metadata: Metadata = {
-  title: "Bountiful CSAs — farmer dashboard",
-  description: "The farmer's side of Bountiful CSAs.",
+  title: {
+    default: TITLE,
+    template: "%s - Bountiful",
+  },
+  description: DESCRIPTION,
+  applicationName: "Bountiful",
+  openGraph: {
+    type: "website",
+    siteName: "Bountiful",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

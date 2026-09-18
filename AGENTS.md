@@ -12,11 +12,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Next.js 16 (App Router, TypeScript) app. Tech stack rationale lives in
 `data/bountifulcsas-platform-design/report.md` Section 6 (outside this worktree, in firstmate's
-data directory) — Postgres/Neon, Drizzle, Clerk, Inngest, Stripe, etc. The farmer dashboard UI
-and Stripe Connect payments/billing (see below) are implemented; Clerk auth, Inngest jobs, and
-the buyer storefront are not yet built.
+data directory) — Postgres/Neon, Drizzle, Clerk, Inngest, Stripe, etc. The public landing page,
+the farmer dashboard UI, and Stripe Connect payments/billing (see below) are implemented; Clerk
+auth, Inngest jobs, and the buyer storefront are not yet built.
 
-- `/dashboard` is the farmer-facing entry route (redirected to from `/`). It mounts
+- `/` is the public landing page (see below). `/dashboard` is the farmer-facing app. It mounts
   `components/dashboard/DashboardApp.tsx`, which owns view-switching, the publish-box dialog, and
   the assistant panel — all in-memory `useState`, no backend yet.
 - `components/dashboard/{Shell,WeekView,BoxPlanner,Roster,Money,Payments,Assistant}.tsx` are the
@@ -108,6 +108,54 @@ the buyer storefront are not yet built.
 - `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `DATABASE_PATH` / `NEXT_PUBLIC_APP_URL` live in
   `.env.local` (gitignored, test-mode key). For local webhook testing:
   `stripe listen --forward-to localhost:3000/api/stripe/webhook`.
+
+## Landing page (`/`)
+
+- One scrolling waitlist page for farmers, ported from a Claude Design hi-fi prototype saved at
+  `data/bountifulcsas-landing-page/design-source/` (firstmate's data directory). Sections live in
+  `components/landing/*.tsx`; `LandingPage.tsx` composes them and owns the section order.
+- Signups POST to `app/api/waitlist/route.ts` and land in the `waitlist_signups` table. Email is
+  the only required field, validated server-side; a repeat email is a friendly success that merges
+  in any newly supplied optional answers; `lib/waitlist.ts` holds the honeypot field name and the
+  share-count options both the form and the validator use. Read the table with
+  `npm run waitlist:export` (CSV to stdout).
+- `components/landing/DemoSection.tsx` plays the recorded tour from `public/demo/` (see below)
+  with `preload="none"` so the clip costs nothing until a visitor presses play. Its heading states
+  the running time, so re-cutting the video means re-checking that line against
+  `public/demo/manifest.json`'s `durationMs`.
+- The page's look is the "seed packet" direction the captain picked: hand-cut corners, thick
+  sticker shadows and warm paper. It is a block of token overrides at the top of
+  `components/landing/landing.css` scoped to `.landing`, so the dashboard keeps the quieter
+  defaults. Retune the look there rather than in `app/tokens/`.
+- `components/landing/landing.css` holds every breakpoint. Two traps it documents inline: sections
+  combine `.landing-shell` with `.landing-header`/`.landing-section`, so those must use
+  `padding-inline`/`padding-block` rather than the `padding` shorthand; and `Button` plus `Field`
+  set `box-shadow`/`color` inline, which outranks both `base.css`'s `:focus-visible` ring and any
+  plain class rule — the ring needs `!important` and the label colors are re-pointed through the
+  tokens their inline styles read.
+- The product mark is `components/core/Wordmark.tsx`, shared by the dashboard shell and the
+  landing header so the two cannot drift. Render it rather than re-writing the markup.
+- Dashboard screenshots in "A look inside" are committed under `public/screenshots/` and served
+  through `next/image`. Recapture them by running the app and driving `/dashboard?view=week|box|
+  payments` with Playwright at 2x, hiding `nextjs-portal` first.
+
+## Demo video (screencast-axi)
+
+- The landing page's demo clip is produced by `screencast-axi` (pinned devDependency) from
+  `screencast.config.ts` + `scenarios/product-tour.ts`; deliverables land in `public/demo/`
+  (mp4/webm/poster + `manifest.json`) and are committed. `npm run demo:rehearse` is the cheap
+  loop - it checks every selector without encoding; `npm run demo:record` shoots the take.
+  Run `npm run db:push && npm run db:seed` and `next dev` first, and pass
+  `SCREENCAST_BASE_URL` when dev did not get port 3000.
+- Both scripts need `NODE_OPTIONS=--import=tsx`: Node 22.14 crashes in its `require(esm)`
+  interop when the tool registers `tsx` lazily, mid-run, to read a `.ts` config. Registering it
+  up front takes the working path. Drop the flag when this project's Node moves past 22.14.
+- Playwright fixes the video canvas at context creation, so `setViewportSize()` mid-take does
+  not reframe a clip - it pins the page to a corner and greys the rest. The phone beat therefore
+  loads `/dashboard` into a 390px-wide iframe (a media query inside an iframe reads the iframe's
+  own viewport, so the `<1024px` drawer layout is the real one). Reuse that approach rather than
+  resizing. The scenario's comments carry the rest of the reasoning, including why the outer
+  document's drawn cursor has to be suppressed once the pointer enters the frame.
 
 ## Maintaining this file
 

@@ -5,6 +5,7 @@ import {
   CalendarDays, Package, Users, Receipt, Landmark, Store, Sprout, MessagesSquare, CloudSun, Mail, Menu, X,
 } from "lucide-react";
 import { IconButton } from "../core/IconButton";
+import { Wordmark } from "../core/Wordmark";
 import "./Shell.css";
 
 export type ViewId = "week" | "box" | "members" | "money" | "payments" | "farmstore" | "season";
@@ -81,8 +82,8 @@ export function Shell({ view, onView, children, onHelp }: ShellProps) {
           padding: "var(--space-6) var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-7)",
         }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)" }}>
-          <div style={{ fontFamily: "var(--type-display-family)", fontWeight: "var(--weight-display)", letterSpacing: "var(--tracking-display)", fontSize: "var(--text-lg)", padding: "0 var(--space-2)" }}>
-            <span style={{ borderBottom: "3px solid var(--sun-500)", paddingBottom: 2 }}>Bountiful</span> CSAs
+          <div style={{ padding: "0 var(--space-2)" }}>
+            <Wordmark />
           </div>
           <button
             ref={closeRef}
